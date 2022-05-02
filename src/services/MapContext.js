@@ -1,12 +1,5 @@
 //
-import React, {
-  useState,
-  useEffect,
-  Context,
-  createContext,
-  useContext,
-} from "react";
-import { geolocationServices } from "./geolocationServices.js";
+import React, {createContext,} from "react";
 
 // Conversations Context
 

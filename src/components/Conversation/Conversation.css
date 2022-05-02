@@ -1,7 +1,7 @@
 .chatbox {
-  /* background-color: burlywood; */
-  height: 30vh;
-  overflow: auto;
-  overflow-wrap: 'break-word';
-  text-overflow: 'ellipsis';
+    /* background-color: burlywood; */
+    height: 30vh;
+    overflow: auto;
+    overflow-wrap: 'break-word';
+    text-overflow: 'ellipsis';
 }

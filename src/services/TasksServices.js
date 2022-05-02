@@ -12,15 +12,13 @@
 // import { TasksDB } from "../testdata";
 // END TEST
 import axios from 'axios';
-import { GrNext } from 'react-icons/gr';
 
 import {
-  deviseAuthnResRefresh,
-  TASKS_API_TIMEOUT,
-  API_TASKS_ROUTE,
-  API_PROFILE_TASKS_ROUTE,
-  reqAuthnToHeaders,
-  API_TASK_STATS_ROUTE,
+    API_PROFILE_TASKS_ROUTE,
+    API_TASK_STATS_ROUTE,
+    API_TASKS_ROUTE,
+    reqAuthnToHeaders,
+    TASKS_API_TIMEOUT,
 } from './apiServices';
 
 // ///////////////////////////
@@ -60,50 +58,50 @@ import {
 // trigger loadedTasksUpdated / setLoadedTasksUpdated
 //////////////////////////
 const updateTaskStoreFrom = (previousTasks, createdList, updatedList) => {
-  // console.log(
-  //   '### DEBUGDEBUG BEGIN updateTaskStoreFrom return tasks: show previousTasks',
-  //   previousTasks
-  // );
+    // console.log(
+    //   '### DEBUGDEBUG BEGIN updateTaskStoreFrom return tasks: show previousTasks',
+    //   previousTasks
+    // );
 
-  const taskMap = new Map(previousTasks); // previousTasks is assumed to be a Map or an iterator with [key, value]
-  createdList.forEach((t) => {
-    taskMap.set(t.id, t);
-  });
+    const taskMap = new Map(previousTasks); // previousTasks is assumed to be a Map or an iterator with [key, value]
+    createdList.forEach((t) => {
+        taskMap.set(t.id, t);
+    });
 
-  // const tasksIds = Array.from(taskMap.keys());
+    // const tasksIds = Array.from(taskMap.keys());
 
-  // updatedList.forEach((t) => {
-  //   if (t.id in tasksIds) {
-  //     // only update taskMap we already have or that are in the new area
-  //     taskMap.set(t.id, t);
-  //   }
-  // });
+    // updatedList.forEach((t) => {
+    //   if (t.id in tasksIds) {
+    //     // only update taskMap we already have or that are in the new area
+    //     taskMap.set(t.id, t);
+    //   }
+    // });
 
-  // taskMap.forEach((tm) => {
-  //   const id = tm.key;
-  //   const t = tm.value;
+    // taskMap.forEach((tm) => {
+    //   const id = tm.key;
+    //   const t = tm.value;
 
-  //   const foundUpdated = updatedList.find((u) => u.id == id);
-  //   if (foundUpdated) {
-  //     tm.set(id, { ...t, ...foundUpdated });
-  //   }
-  // });
+    //   const foundUpdated = updatedList.find((u) => u.id == id);
+    //   if (foundUpdated) {
+    //     tm.set(id, { ...t, ...foundUpdated });
+    //   }
+    // });
 
-  taskMap.forEach((tv, tid, map) => {
-    // const id = tm.key;
-    // const t = tm.value;
+    taskMap.forEach((tv, tid, map) => {
+        // const id = tm.key;
+        // const t = tm.value;
 
-    const foundUpdated = updatedList.find((u) => u.id == tid);
-    if (foundUpdated) {
-      map.set(tid, { ...tv, ...foundUpdated });
-    }
-  });
+        const foundUpdated = updatedList.find((u) => u.id == tid);
+        if (foundUpdated) {
+            map.set(tid, {...tv, ...foundUpdated});
+        }
+    });
 
-  // console.log(
-  //   '### DEBUGDEBUG END updateTaskStoreFrom return taskMap: ',
-  //   taskMap
-  // );
-  return taskMap;
+    // console.log(
+    //   '### DEBUGDEBUG END updateTaskStoreFrom return taskMap: ',
+    //   taskMap
+    // );
+    return taskMap;
 };
 
 ///////////////////////////
@@ -114,24 +112,24 @@ const updateTaskStoreFrom = (previousTasks, createdList, updatedList) => {
 // trigger loadedTasksUpdated / setLoadedTasksUpdated
 //////////////////////////
 const updateATaskInDb = (previousTasksMap, updatedTaskbyId) => {
-  // console.log(
-  //   '### DEBUGDEBUG BEGIN updateATaskInDb return tasks: show previousTasksMap',
-  //   previousTasksMap
-  // );
-  if (!previousTasksMap.has(updatedTaskbyId.id)) {
-    return previousTasksMap;
-  } else {
-    const task = previousTasksMap.get(updatedTaskbyId.id);
-    // console.log('### DEBUGDEBUG END updateATaskInDb updates with task: ', {
-    //   id: updatedTaskbyId.id,
-    //   task: { ...task, ...updatedTaskbyId },
-    // });
+    // console.log(
+    //   '### DEBUGDEBUG BEGIN updateATaskInDb return tasks: show previousTasksMap',
+    //   previousTasksMap
+    // );
+    if (!previousTasksMap.has(updatedTaskbyId.id)) {
+        return previousTasksMap;
+    } else {
+        const task = previousTasksMap.get(updatedTaskbyId.id);
+        // console.log('### DEBUGDEBUG END updateATaskInDb updates with task: ', {
+        //   id: updatedTaskbyId.id,
+        //   task: { ...task, ...updatedTaskbyId },
+        // });
 
-    return previousTasksMap.set(updatedTaskbyId.id, {
-      ...task,
-      ...updatedTaskbyId,
-    });
-  }
+        return previousTasksMap.set(updatedTaskbyId.id, {
+            ...task,
+            ...updatedTaskbyId,
+        });
+    }
 };
 
 // ///////////////////////////
@@ -201,374 +199,374 @@ const updateATaskInDb = (previousTasksMap, updatedTaskbyId) => {
 /////// generic fetch tasks function
 //////////////////////////////
 const fetchTasks = async (
-  authn, //{ accessToken, client, expiry, uid, id },
-  userId,
-  taskId,
-  lat,
-  lng,
-  radius,
-  since
+    authn, //{ accessToken, client, expiry, uid, id },
+    userId,
+    taskId,
+    lat,
+    lng,
+    radius,
+    since
 ) => {
-  const reqConfig = {
-    url: API_TASKS_ROUTE,
-    method: 'get',
+    const reqConfig = {
+        url: API_TASKS_ROUTE,
+        method: 'get',
 
-    headers: reqAuthnToHeaders(authn),
-    timeout: TASKS_API_TIMEOUT,
-    params: {
-      user_id: userId,
-      lat: lat,
-      lng: lng,
-      radius: radius,
-      since: since,
-    },
-  };
+        headers: reqAuthnToHeaders(authn),
+        timeout: TASKS_API_TIMEOUT,
+        params: {
+            user_id: userId,
+            lat: lat,
+            lng: lng,
+            radius: radius,
+            since: since,
+        },
+    };
 
-  return axios(reqConfig);
+    return axios(reqConfig);
 };
 
 ///////////////////////////////
 /////// fetch a single task/request with full data
 //////////////////////////////
 const fetchATask = async (
-  authn, //{ accessToken, client, expiry, uid, id },
-  // userId,
-  taskId
-  // lat,
-  // lng,
-  // radius,
-  // since
+    authn, //{ accessToken, client, expiry, uid, id },
+    // userId,
+    taskId
+    // lat,
+    // lng,
+    // radius,
+    // since
 ) => {
-  const reqConfig = {
-    url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
-    method: 'get',
+    const reqConfig = {
+        url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
+        method: 'get',
 
-    headers: reqAuthnToHeaders(authn),
-    timeout: TASKS_API_TIMEOUT,
-    // params: {
-    //   user_id: userId,
-    //   lat: lat,
-    //   lng: lng,
-    //   radius: radius,
-    //   since: since,
-    // },
-  };
+        headers: reqAuthnToHeaders(authn),
+        timeout: TASKS_API_TIMEOUT,
+        // params: {
+        //   user_id: userId,
+        //   lat: lat,
+        //   lng: lng,
+        //   radius: radius,
+        //   since: since,
+        // },
+    };
 
-  return axios(reqConfig);
+    return axios(reqConfig);
 };
 
 ///////////////////////////////
 /////// new
 //////////////////////////////
 const fetchProfileTasks = async (
-  authn //{ accessToken, client, expiry, uid, id },
-  // userId,
-  // taskId,
-  // // lat,
-  // // lng,
-  // // radius
+    authn //{ accessToken, client, expiry, uid, id },
+    // userId,
+    // taskId,
+    // // lat,
+    // // lng,
+    // // radius
 ) => {
-  const reqConfig = {
-    url: API_PROFILE_TASKS_ROUTE,
-    method: 'get',
+    const reqConfig = {
+        url: API_PROFILE_TASKS_ROUTE,
+        method: 'get',
 
-    headers: reqAuthnToHeaders(authn),
-    timeout: TASKS_API_TIMEOUT,
-    // params: {
-    //   user_id: userId,
-    //   lat: lat,
-    //   lng: lng,
-    //   radius: radius,
-    // },
-  };
+        headers: reqAuthnToHeaders(authn),
+        timeout: TASKS_API_TIMEOUT,
+        // params: {
+        //   user_id: userId,
+        //   lat: lat,
+        //   lng: lng,
+        //   radius: radius,
+        // },
+    };
 
-  return axios(reqConfig);
+    return axios(reqConfig);
 };
 
 ///////////////////////////////
 /////// new
 //////////////////////////////
 const fetchUpdatedTasks = async (
-  authn, //{ accessToken, client, expiry, uid, id },
-  userId,
-  taskId,
-  lat,
-  lng,
-  radius,
-  since
+    authn, //{ accessToken, client, expiry, uid, id },
+    userId,
+    taskId,
+    lat,
+    lng,
+    radius,
+    since
 ) => {
-  const reqConfig = {
-    url: API_TASKS_ROUTE,
-    method: 'get',
+    const reqConfig = {
+        url: API_TASKS_ROUTE,
+        method: 'get',
 
-    headers: reqAuthnToHeaders(authn),
-    timeout: TASKS_API_TIMEOUT,
-    params: {
-      user_id: userId,
-      lat: lat,
-      lng: lng,
-      radius: radius,
-      since: since,
-    },
-  };
+        headers: reqAuthnToHeaders(authn),
+        timeout: TASKS_API_TIMEOUT,
+        params: {
+            user_id: userId,
+            lat: lat,
+            lng: lng,
+            radius: radius,
+            since: since,
+        },
+    };
 
-  return axios(reqConfig);
+    return axios(reqConfig);
 };
 
 ///////////////////////////////////////////
 //////////// new
 ///////////////////////////////
 const createTask = async (
-  authn,
-  // updateAuthnFunc,
-  // updateDataFunc,
-  // updateCountFunc,
-  // updateDataTrackerFunc,
-  title,
-  kind,
-  description,
-  isPublished = true,
-  isFullfilled,
-  taskCoords
+    authn,
+    // updateAuthnFunc,
+    // updateDataFunc,
+    // updateCountFunc,
+    // updateDataTrackerFunc,
+    title,
+    kind,
+    description,
+    isPublished = true,
+    isFullfilled,
+    taskCoords
 ) => {
-  // console.log('### CREATETASK BEFORE AXIOS AUTHN and DATA: ', authn);
+    // console.log('### CREATETASK BEFORE AXIOS AUTHN and DATA: ', authn);
 
-  const requestConfig = {
-    url: API_TASKS_ROUTE,
-    method: 'post',
+    const requestConfig = {
+        url: API_TASKS_ROUTE,
+        method: 'post',
 
-    headers: reqAuthnToHeaders(authn),
-    // params: {
-    //   id: id,
-    //   lat: coords.lat,
-    //   lng: coords.lng,
-    //   radius: radius,
-    // },
-    // params: {
-    //   // id: id,
-    //   task_id: taskid.toString(),
-    //   // user_id: authn.id.toString(),
-    //   is_active: true,
-    // },
-    data: {
-      title: title,
-      kind: kind,
-      description: description,
-      is_published: true, // isPublished is always true on create task,
-      is_fullfilled: isFullfilled,
-      lat: taskCoords.lat,
-      lng: taskCoords.lng,
-    },
+        headers: reqAuthnToHeaders(authn),
+        // params: {
+        //   id: id,
+        //   lat: coords.lat,
+        //   lng: coords.lng,
+        //   radius: radius,
+        // },
+        // params: {
+        //   // id: id,
+        //   task_id: taskid.toString(),
+        //   // user_id: authn.id.toString(),
+        //   is_active: true,
+        // },
+        data: {
+            title: title,
+            kind: kind,
+            description: description,
+            is_published: true, // isPublished is always true on create task,
+            is_fullfilled: isFullfilled,
+            lat: taskCoords.lat,
+            lng: taskCoords.lng,
+        },
 
-    timeout: TASKS_API_TIMEOUT,
-  };
+        timeout: TASKS_API_TIMEOUT,
+    };
 
-  return axios(requestConfig);
+    return axios(requestConfig);
 };
 
 const updateTask = async (
-  authn,
-  taskId,
-  // updateAuthnFunc,
-  // updateDataFunc,
-  // updateCountFunc,
-  // updateDataTrackerFunc,
-  title,
-  kind,
-  description,
-  isPublished,
-  isFullfilled,
-  taskCoords
+    authn,
+    taskId,
+    // updateAuthnFunc,
+    // updateDataFunc,
+    // updateCountFunc,
+    // updateDataTrackerFunc,
+    title,
+    kind,
+    description,
+    isPublished,
+    isFullfilled,
+    taskCoords
 ) => {
-  // console.log('### UPDATETASK BEFORE AXIOS AUTHN and DATA: ', authn);
+    // console.log('### UPDATETASK BEFORE AXIOS AUTHN and DATA: ', authn);
 
-  const requestConfig = {
-    url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
-    method: 'patch', // 'put',
+    const requestConfig = {
+        url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
+        method: 'patch', // 'put',
 
-    headers: reqAuthnToHeaders(authn),
-    // params: {
-    //   id: id,
-    //   lat: coords.lat,
-    //   lng: coords.lng,
-    //   radius: radius,
-    // },
-    // params: {
-    //   // id: id,
-    //   task_id: taskid.toString(),
-    //   // user_id: authn.id.toString(),
-    //   is_active: true,
-    // },
-    data: {
-      title: title,
-      kind: kind,
-      description: description,
-      is_published: isPublished,
-      is_fullfilled: isFullfilled,
-      lat: taskCoords.lat,
-      lng: taskCoords.lng,
-    },
+        headers: reqAuthnToHeaders(authn),
+        // params: {
+        //   id: id,
+        //   lat: coords.lat,
+        //   lng: coords.lng,
+        //   radius: radius,
+        // },
+        // params: {
+        //   // id: id,
+        //   task_id: taskid.toString(),
+        //   // user_id: authn.id.toString(),
+        //   is_active: true,
+        // },
+        data: {
+            title: title,
+            kind: kind,
+            description: description,
+            is_published: isPublished,
+            is_fullfilled: isFullfilled,
+            lat: taskCoords.lat,
+            lng: taskCoords.lng,
+        },
 
-    timeout: TASKS_API_TIMEOUT,
-  };
+        timeout: TASKS_API_TIMEOUT,
+    };
 
-  return axios(requestConfig);
+    return axios(requestConfig);
 };
 
 const updateATaskAsFullfilled = async (
-  authn,
-  taskId
-  // updateAuthnFunc,
-  // updateDataFunc,
-  // updateCountFunc,
-  // updateDataTrackerFunc,
-  // title,
-  // kind,
-  // description,
-  // isPublished,
-  // isFullfilled,
-  // taskCoords
+    authn,
+    taskId
+    // updateAuthnFunc,
+    // updateDataFunc,
+    // updateCountFunc,
+    // updateDataTrackerFunc,
+    // title,
+    // kind,
+    // description,
+    // isPublished,
+    // isFullfilled,
+    // taskCoords
 ) => {
-  // console.log(
-  //   '### UPDATETASK AS FULLFILLED BEFORE AXIOS AUTHN and DATA: ',
-  //   authn
-  // );
+    // console.log(
+    //   '### UPDATETASK AS FULLFILLED BEFORE AXIOS AUTHN and DATA: ',
+    //   authn
+    // );
 
-  const requestConfig = {
-    url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
-    method: 'patch',
+    const requestConfig = {
+        url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
+        method: 'patch',
 
-    headers: reqAuthnToHeaders(authn),
-    // params: {
-    //   id: id,
-    //   lat: coords.lat,
-    //   lng: coords.lng,
-    //   radius: radius,
-    // },
-    // params: {
-    //   // id: id,
-    //   task_id: taskid.toString(),
-    //   // user_id: authn.id.toString(),
-    //   is_active: true,
-    // },
-    data: {
-      // title: title,
-      // kind: kind,
-      // description: description,
-      is_published: false,
-      is_fullfilled: true,
-      // lat: taskCoords.lat,
-      // lng: taskCoords.lng,
-    },
+        headers: reqAuthnToHeaders(authn),
+        // params: {
+        //   id: id,
+        //   lat: coords.lat,
+        //   lng: coords.lng,
+        //   radius: radius,
+        // },
+        // params: {
+        //   // id: id,
+        //   task_id: taskid.toString(),
+        //   // user_id: authn.id.toString(),
+        //   is_active: true,
+        // },
+        data: {
+            // title: title,
+            // kind: kind,
+            // description: description,
+            is_published: false,
+            is_fullfilled: true,
+            // lat: taskCoords.lat,
+            // lng: taskCoords.lng,
+        },
 
-    timeout: TASKS_API_TIMEOUT,
-  };
+        timeout: TASKS_API_TIMEOUT,
+    };
 
-  return axios(requestConfig);
+    return axios(requestConfig);
 };
 
 const updateATaskAsPublished = async (
-  authn,
-  taskId
-  // updateAuthnFunc,
-  // updateDataFunc,
-  // updateCountFunc,
-  // updateDataTrackerFunc,
-  // title,
-  // kind,
-  // description,
-  // isPublished,
-  // isFullfilled,
-  // taskCoords
+    authn,
+    taskId
+    // updateAuthnFunc,
+    // updateDataFunc,
+    // updateCountFunc,
+    // updateDataTrackerFunc,
+    // title,
+    // kind,
+    // description,
+    // isPublished,
+    // isFullfilled,
+    // taskCoords
 ) => {
-  // console.log(
-  //   '### UPDATETASK AS PUBLISHED BEFORE AXIOS AUTHN and DATA: ',
-  //   authn
-  // );
+    // console.log(
+    //   '### UPDATETASK AS PUBLISHED BEFORE AXIOS AUTHN and DATA: ',
+    //   authn
+    // );
 
-  const requestConfig = {
-    url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
-    method: 'patch',
+    const requestConfig = {
+        url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
+        method: 'patch',
 
-    headers: reqAuthnToHeaders(authn),
-    // params: {
-    //   id: id,
-    //   lat: coords.lat,
-    //   lng: coords.lng,
-    //   radius: radius,
-    // },
-    // params: {
-    //   // id: id,
-    //   task_id: taskid.toString(),
-    //   // user_id: authn.id.toString(),
-    //   is_active: true,
-    // },
-    data: {
-      // title: title,
-      // kind: kind,
-      // description: description,
-      is_published: true,
-      // is_fullfilled: true,
-      // lat: taskCoords.lat,
-      // lng: taskCoords.lng,
-    },
+        headers: reqAuthnToHeaders(authn),
+        // params: {
+        //   id: id,
+        //   lat: coords.lat,
+        //   lng: coords.lng,
+        //   radius: radius,
+        // },
+        // params: {
+        //   // id: id,
+        //   task_id: taskid.toString(),
+        //   // user_id: authn.id.toString(),
+        //   is_active: true,
+        // },
+        data: {
+            // title: title,
+            // kind: kind,
+            // description: description,
+            is_published: true,
+            // is_fullfilled: true,
+            // lat: taskCoords.lat,
+            // lng: taskCoords.lng,
+        },
 
-    timeout: TASKS_API_TIMEOUT,
-  };
+        timeout: TASKS_API_TIMEOUT,
+    };
 
-  return axios(requestConfig);
+    return axios(requestConfig);
 };
 
 const updateATaskAsUnpublished = async (
-  authn,
-  taskId
-  // updateAuthnFunc,
-  // updateDataFunc,
-  // updateCountFunc,
-  // updateDataTrackerFunc,
-  // title,
-  // kind,
-  // description,
-  // isPublished,
-  // isFullfilled,
-  // taskCoords
+    authn,
+    taskId
+    // updateAuthnFunc,
+    // updateDataFunc,
+    // updateCountFunc,
+    // updateDataTrackerFunc,
+    // title,
+    // kind,
+    // description,
+    // isPublished,
+    // isFullfilled,
+    // taskCoords
 ) => {
-  // console.log(
-  //   '### UPDATETASK AS PUBLISHED BEFORE AXIOS AUTHN and DATA: ',
-  //   authn
-  // );
+    // console.log(
+    //   '### UPDATETASK AS PUBLISHED BEFORE AXIOS AUTHN and DATA: ',
+    //   authn
+    // );
 
-  const requestConfig = {
-    url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
-    method: 'patch',
+    const requestConfig = {
+        url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
+        method: 'patch',
 
-    headers: reqAuthnToHeaders(authn),
-    // params: {
-    //   id: id,
-    //   lat: coords.lat,
-    //   lng: coords.lng,
-    //   radius: radius,
-    // },
-    // params: {
-    //   // id: id,
-    //   task_id: taskid.toString(),
-    //   // user_id: authn.id.toString(),
-    //   is_active: true,
-    // },
-    data: {
-      // title: title,
-      // kind: kind,
-      // description: description,
-      is_published: false,
-      // is_fullfilled: true,
-      // lat: taskCoords.lat,
-      // lng: taskCoords.lng,
-    },
+        headers: reqAuthnToHeaders(authn),
+        // params: {
+        //   id: id,
+        //   lat: coords.lat,
+        //   lng: coords.lng,
+        //   radius: radius,
+        // },
+        // params: {
+        //   // id: id,
+        //   task_id: taskid.toString(),
+        //   // user_id: authn.id.toString(),
+        //   is_active: true,
+        // },
+        data: {
+            // title: title,
+            // kind: kind,
+            // description: description,
+            is_published: false,
+            // is_fullfilled: true,
+            // lat: taskCoords.lat,
+            // lng: taskCoords.lng,
+        },
 
-    timeout: TASKS_API_TIMEOUT,
-  };
+        timeout: TASKS_API_TIMEOUT,
+    };
 
-  return axios(requestConfig);
+    return axios(requestConfig);
 };
 
 // const updateATaskAsPublished = async (
@@ -676,52 +674,52 @@ const updateATaskAsUnpublished = async (
 // };
 
 const deleteATask = async (
-  authn,
-  taskId
-  // updateAuthnFunc,
-  // updateDataFunc,
-  // updateCountFunc,
-  // updateDataTrackerFunc,
-  // title,
-  // kind,
-  // description,
-  // isPublished,
-  // isFullfilled,
-  // taskCoords
+    authn,
+    taskId
+    // updateAuthnFunc,
+    // updateDataFunc,
+    // updateCountFunc,
+    // updateDataTrackerFunc,
+    // title,
+    // kind,
+    // description,
+    // isPublished,
+    // isFullfilled,
+    // taskCoords
 ) => {
-  //console.log('### DELETEATASK BEFORE AXIOS AUTHN and DATA: ', authn);
+    //console.log('### DELETEATASK BEFORE AXIOS AUTHN and DATA: ', authn);
 
-  const requestConfig = {
-    url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
-    method: 'delete',
+    const requestConfig = {
+        url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
+        method: 'delete',
 
-    headers: reqAuthnToHeaders(authn),
-    // params: {
-    //   id: id,
-    //   lat: coords.lat,
-    //   lng: coords.lng,
-    //   radius: radius,
-    // },
-    // params: {
-    //   // id: id,
-    //   task_id: taskid.toString(),
-    //   // user_id: authn.id.toString(),
-    //   is_active: true,
-    // },
-    // data: {
-    //   title: title,
-    //   kind: kind,
-    //   description: description,
-    //   is_published: isPublished,
-    //   is_fullfilled: isFullfilled,
-    //   lat: taskCoords.lat,
-    //   lng: taskCoords.lng,
-    // },
+        headers: reqAuthnToHeaders(authn),
+        // params: {
+        //   id: id,
+        //   lat: coords.lat,
+        //   lng: coords.lng,
+        //   radius: radius,
+        // },
+        // params: {
+        //   // id: id,
+        //   task_id: taskid.toString(),
+        //   // user_id: authn.id.toString(),
+        //   is_active: true,
+        // },
+        // data: {
+        //   title: title,
+        //   kind: kind,
+        //   description: description,
+        //   is_published: isPublished,
+        //   is_fullfilled: isFullfilled,
+        //   lat: taskCoords.lat,
+        //   lng: taskCoords.lng,
+        // },
 
-    timeout: TASKS_API_TIMEOUT,
-  };
+        timeout: TASKS_API_TIMEOUT,
+    };
 
-  return axios(requestConfig);
+    return axios(requestConfig);
 };
 
 //////////////////////
@@ -729,58 +727,58 @@ const deleteATask = async (
 ///////////////////////
 
 const fetchTaskStats = async (
-  authn //{ accessToken, client, expiry, uid, id },
+    authn //{ accessToken, client, expiry, uid, id },
 ) => {
-  const reqConfig = {
-    url: API_TASK_STATS_ROUTE,
-    method: 'get',
+    const reqConfig = {
+        url: API_TASK_STATS_ROUTE,
+        method: 'get',
 
-    headers: reqAuthnToHeaders(authn),
-    timeout: TASKS_API_TIMEOUT,
-    // params: {
-    //   user_id: userId,
-    //   lat: lat,
-    //   lng: lng,
-    //   radius: radius,
-    //   since: since,
-    // },
-  };
+        headers: reqAuthnToHeaders(authn),
+        timeout: TASKS_API_TIMEOUT,
+        // params: {
+        //   user_id: userId,
+        //   lat: lat,
+        //   lng: lng,
+        //   radius: radius,
+        //   since: since,
+        // },
+    };
 
-  return axios(reqConfig);
+    return axios(reqConfig);
 };
 
 ///////////////////////////////////
 ////////// Local storage functions
 ///////////////////////////////////
 function pinTask(taskId) {
-  // Add to LocalStorage
-  console.log(`*******NOTE TODO: ADD PINNED TASK ${taskId} to LocalStorage`);
-  return taskId;
+    // Add to LocalStorage
+    console.log(`*******NOTE TODO: ADD PINNED TASK ${taskId} to LocalStorage`);
+    return taskId;
 }
 
 function hideTask(taskId) {
-  // Add to LocalStorage
-  console.log(`*******NOTE TODO: ADD HIDDEN TASK ${taskId} to LocalStorage`);
-  return taskId;
+    // Add to LocalStorage
+    console.log(`*******NOTE TODO: ADD HIDDEN TASK ${taskId} to LocalStorage`);
+    return taskId;
 }
 
 export {
-  fetchTasks,
-  fetchATask,
-  fetchProfileTasks,
-  fetchUpdatedTasks,
-  pinTask,
-  hideTask,
-  createTask,
-  updateTask,
-  deleteATask,
-  updateATaskAsFullfilled,
-  updateATaskAsPublished,
-  updateATaskAsUnpublished,
-  // updateATaskByIdWith,
-  // updateATaskWith,
-  updateTaskStoreFrom,
-  fetchTaskStats,
+    fetchTasks,
+    fetchATask,
+    fetchProfileTasks,
+    fetchUpdatedTasks,
+    pinTask,
+    hideTask,
+    createTask,
+    updateTask,
+    deleteATask,
+    updateATaskAsFullfilled,
+    updateATaskAsPublished,
+    updateATaskAsUnpublished,
+    // updateATaskByIdWith,
+    // updateATaskWith,
+    updateTaskStoreFrom,
+    fetchTaskStats,
 };
 
 ////////////////////////////////////////////

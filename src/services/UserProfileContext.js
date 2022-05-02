@@ -1,18 +1,12 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  Context,
-  createContext,
-} from "react";
+import React, {createContext,} from "react";
 
 let UserProfileContext = createContext();
 export default UserProfileContext;
 
 /**
- * 
+ *
 
-  const UserProfileContext = createContext({
+ const UserProfileContext = createContext({
     userProfile: {
       firstName: "",
       lastName: "",
@@ -32,15 +26,15 @@ export default UserProfileContext;
     },
     setUserProfile: setUserProfile,
   });
- * 
- * 
- * 
+ *
+ *
+ *
  *  <UserProfileContext.Provider value={userProfile}>
-            <UserAuthnContext.Provider value={userAuthn}>
+ <UserAuthnContext.Provider value={userAuthn}>
 
-   </UserAuthnContext.Provider>
-          </UserProfileContext.Provider>
- * 
+ </UserAuthnContext.Provider>
+ </UserProfileContext.Provider>
+ *
  */
 
 // import {getCurrentLocation} from './components/api/api';

@@ -2,12 +2,7 @@
 
 import axios from 'axios';
 
-import {
-  deviseAuthnResRefresh,
-  TASKS_API_TIMEOUT,
-  API_APPSTATS_ROUTE,
-  reqAuthnToHeaders,
-} from './apiServices';
+import {API_APPSTATS_ROUTE, reqAuthnToHeaders, TASKS_API_TIMEOUT,} from './apiServices';
 
 import haversine from 'haversine-distance';
 
@@ -48,30 +43,30 @@ const ROLE_AS_ANY = ROLE_AS_REQUESTOR + ROLE_AS_VOLUNTEER;
 /////// fetch App stats function exposed on /api/appstats
 //////////////////////////////
 const fetchAppStats = async (
-  authn, //{ accessToken, client, expiry, uid, id },
-  userId,
-  taskId,
-  lat,
-  lng,
-  radius,
-  since
+    authn, //{ accessToken, client, expiry, uid, id },
+    userId,
+    taskId,
+    lat,
+    lng,
+    radius,
+    since
 ) => {
-  const reqConfig = {
-    url: API_APPSTATS_ROUTE,
-    method: 'get',
+    const reqConfig = {
+        url: API_APPSTATS_ROUTE,
+        method: 'get',
 
-    headers: reqAuthnToHeaders(authn),
-    timeout: TASKS_API_TIMEOUT,
-    params: {
-      user_id: userId,
-      lat: lat,
-      lng: lng,
-      radius: radius,
-      since: since,
-    },
-  };
+        headers: reqAuthnToHeaders(authn),
+        timeout: TASKS_API_TIMEOUT,
+        params: {
+            user_id: userId,
+            lat: lat,
+            lng: lng,
+            radius: radius,
+            since: since,
+        },
+    };
 
-  return axios(reqConfig);
+    return axios(reqConfig);
 };
 
 // const getCurrentRadius = () => {
@@ -117,7 +112,7 @@ const fetchAppStats = async (
 // };
 
 const getDistanceFromLatLngInm = (coords1, coords2) => {
-  return haversine(coords1, coords2);
+    return haversine(coords1, coords2);
 };
 
 // const getCurrentZoom = (radius) => {
@@ -128,71 +123,71 @@ const getDistanceFromLatLngInm = (coords1, coords2) => {
 // };
 
 const getDefaultZoom = (radius) => {
-  // default x18, in profile, LocalStorage
-  // compute from current radius and view size
-  // TEST
-  return DEFAULT_ZOOM;
+    // default x18, in profile, LocalStorage
+    // compute from current radius and view size
+    // TEST
+    return DEFAULT_ZOOM;
 };
 
 const loadLocalSettings = () => {
-  // in meters
-  // read from LocalStorage
-  // or compute from view size and zoom using leaflet
+    // in meters
+    // read from LocalStorage
+    // or compute from view size and zoom using leaflet
 
-  // TEST
-  return { radius: 5000, zoom: 16 };
-  // END TEST
+    // TEST
+    return {radius: 5000, zoom: 16};
+    // END TEST
 };
 
 const storeLocalSettings = () => {
-  // in meters
-  // read from LocalStorage
-  // or compute from view size and zoom using leaflet
+    // in meters
+    // read from LocalStorage
+    // or compute from view size and zoom using leaflet
 
-  // TEST
-  console.log('storeLocalSettings ', { radius: 5000, zoom: 16 });
-  return { radius: 5000, zoom: 16 };
-  // END TEST
+    // TEST
+    console.log('storeLocalSettings ', {radius: 5000, zoom: 16});
+    return {radius: 5000, zoom: 16};
+    // END TEST
 };
 
 const randomInt = (min, max) => {
-  // [min,max]
-  return Math.floor((max - min) * Math.random() + min);
+    // [min,max]
+    return Math.floor((max - min) * Math.random() + min);
 };
 
 export {
-  STATUS_WAITING,
-  STATUS_READY,
-  STATUS_ERROR,
-  STATUS_INFO,
-  ROLE_AS_ADMIN,
-  ROLE_AS_OTHER,
-  ROLE_AS_REQUESTOR,
-  ROLE_AS_VOLUNTEER,
-  ROLE_AS_ANY,
-  INFINITY_RADIUS,
-  MIN_RADIUS,
-  MAX_RADIUS,
-  APP_DEFAULT_LAT,
-  APP_DEFAULT_LNG,
-  MIN_LATITUDE,
-  MAX_LATITUDE,
-  MIN_LONGITUDE,
-  MAX_LONGITUDE,
-  MIN_ZOOM,
-  MAX_ZOOM,
-  DEFAULT_ZOOM,
-  MESSAGE_MAX_SIZE,
-  randomInt,
-  // getCurrentRadius,
-  // getTasksView,
-  // getCurrentZoom,
-  getDefaultZoom,
-  loadLocalSettings,
-  storeLocalSettings,
-  getDistanceFromLatLngInm,
-  PDF_REGEX_PATTERN,
-  JPEG_REGEX_PATTERN,
-  JPG_REGEX_PATTERN,
-  PNG_REGEX_PATTERN,
+    STATUS_WAITING,
+    STATUS_READY,
+    STATUS_ERROR,
+    STATUS_INFO,
+    ROLE_AS_ADMIN,
+    ROLE_AS_OTHER,
+    ROLE_AS_REQUESTOR,
+    ROLE_AS_VOLUNTEER,
+    ROLE_AS_ANY,
+    INFINITY_RADIUS,
+    MIN_RADIUS,
+    MAX_RADIUS,
+    APP_DEFAULT_LAT,
+    APP_DEFAULT_LNG,
+    MIN_LATITUDE,
+    MAX_LATITUDE,
+    MIN_LONGITUDE,
+    MAX_LONGITUDE,
+    MIN_ZOOM,
+    MAX_ZOOM,
+    DEFAULT_ZOOM,
+    MESSAGE_MAX_SIZE,
+    randomInt,
+    // getCurrentRadius,
+    // getTasksView,
+    // getCurrentZoom,
+    getDefaultZoom,
+    loadLocalSettings,
+    storeLocalSettings,
+    getDistanceFromLatLngInm,
+    PDF_REGEX_PATTERN,
+    JPEG_REGEX_PATTERN,
+    JPG_REGEX_PATTERN,
+    PNG_REGEX_PATTERN,
 };

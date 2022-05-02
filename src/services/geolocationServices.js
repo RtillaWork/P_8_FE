@@ -1,32 +1,32 @@
 //
 import {
-  geolocationOptions,
-  MAP_REFRESH_DURATION,
-  DISPLACEMENT_SENSITIVITY,
-  COORDS_REFRESH_SENSITIVITY,
+    COORDS_REFRESH_SENSITIVITY,
+    DISPLACEMENT_SENSITIVITY,
+    geolocationOptions,
+    MAP_REFRESH_DURATION,
 } from "./geolocationSettings";
 
 const toLatLngArray = (coords) => {
-  const lat = parseFloat(coords.lat);
-  const lng = parseFloat(coords.lng);
+    const lat = parseFloat(coords.lat);
+    const lng = parseFloat(coords.lng);
 
-  return [lat, lng];
+    return [lat, lng];
 };
 
 const toLatLngObject = (coords) => {
-  const lat = parseFloat(coords[0]);
-  const lng = parseFloat(coords[1]);
+    const lat = parseFloat(coords[0]);
+    const lng = parseFloat(coords[1]);
 
-  return { lat: lat, lng: lng };
+    return {lat: lat, lng: lng};
 };
 
 export {
-  geolocationOptions,
-  MAP_REFRESH_DURATION,
-  DISPLACEMENT_SENSITIVITY,
-  COORDS_REFRESH_SENSITIVITY,
-  toLatLngArray,
-  toLatLngObject,
+    geolocationOptions,
+    MAP_REFRESH_DURATION,
+    DISPLACEMENT_SENSITIVITY,
+    COORDS_REFRESH_SENSITIVITY,
+    toLatLngArray,
+    toLatLngObject,
 };
 
 // recenter current location
@@ -35,7 +35,7 @@ export {
 // compute zoom level
 //
 
-let currentCoords = { latitude: null, longitude: null };
+let currentCoords = {latitude: null, longitude: null};
 
 //   {
 //   latitude: -23.55052,
@@ -48,28 +48,29 @@ let currentCoords = { latitude: null, longitude: null };
 
 // webAPI
 function okPos(pos) {
-  this.currentCoords.latitude = pos.coords.latitude;
-  this.currentCoords.longitude = pos.coords.longitude;
-  console.log("********FROM MapServices CURRENT LOCATION: location lat/long: ");
-  console.log(this.currentCoords.latitude, "   ", this.currentCoords.longitude);
+    this.currentCoords.latitude = pos.coords.latitude;
+    this.currentCoords.longitude = pos.coords.longitude;
+    console.log("********FROM MapServices CURRENT LOCATION: location lat/long: ");
+    console.log(this.currentCoords.latitude, "   ", this.currentCoords.longitude);
 }
 
 function errPos(err) {
-  console.error(`ERROR > <APP/>getCurrentLocation: ${err.code} ${err.message}`);
+    console.error(`ERROR > <APP/>getCurrentLocation: ${err.code} ${err.message}`);
 }
+
 function getCurrentLocation() {
-  try {
-    navigator.geolocation.getCurrentPosition(okPos, errPos, geolocationOptions);
-  } catch (e) {
-    console.error(
-      "FROM MAPTSERVICES CATCHLOCATION API ERROR CATCH: location lat/long: " +
-        currentCoords +
-        e.toString()
+    try {
+        navigator.geolocation.getCurrentPosition(okPos, errPos, geolocationOptions);
+    } catch (e) {
+        console.error(
+            "FROM MAPTSERVICES CATCHLOCATION API ERROR CATCH: location lat/long: " +
+            currentCoords +
+            e.toString()
+        );
+    }
+    console.info(
+        `FROM MAPSERVICE GETCURRENTLOCATION GET CURRENT POSITION: location lat/long: " + ${currentCoords.latitude}/${currentCoords.longitude}`
     );
-  }
-  console.info(
-    `FROM MAPSERVICE GETCURRENTLOCATION GET CURRENT POSITION: location lat/long: " + ${currentCoords.latitude}/${currentCoords.longitude}`
-  );
 }
 
 // set currentCoords(coords) {
@@ -88,18 +89,18 @@ function getCurrentLocation() {
 // }
 
 export function getCurrentCoords() {
-  // NOTE FOR DEBUG Sao Paolo!
-  currentCoords = {
-    latitude: -23.55052,
-    longitude: -46.633309,
-  };
-  // NOTE FOR DEBUG
-  // this.getCurrentLocation();
-  return currentCoords;
+    // NOTE FOR DEBUG Sao Paolo!
+    currentCoords = {
+        latitude: -23.55052,
+        longitude: -46.633309,
+    };
+    // NOTE FOR DEBUG
+    // this.getCurrentLocation();
+    return currentCoords;
 }
 
 /****
-class MapServices {
+ class MapServices {
   constructor() {
     // this.optionsCoords = {
     //   enableHighAccuracy: true,
@@ -188,8 +189,8 @@ class MapServices {
   }
 }
 
-export default new MapServices();
-***/
+ export default new MapServices();
+ ***/
 
 // useEffect(() => {
 // const watcherId = navigator.geolocation.watchPosition(

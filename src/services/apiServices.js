@@ -1,8 +1,6 @@
 //
-import { useContext, useState, useEffect, Context } from 'react';
 import axios from 'axios';
-import { DirectUpload } from 'activestorage';
-import { STATUS_ERROR, STATUS_READY, STATUS_WAITING } from './appServices';
+import {STATUS_ERROR, STATUS_READY, STATUS_WAITING} from './appServices';
 
 // BEGIN EXPORT CONSTANTS RELATED TO API and REQ/RES SYMBOLS
 // export const API_SYMBOLS = {
@@ -27,16 +25,16 @@ export const MESSAGES_PERIODICUPDATE_INTERVAL = 2000; // refresh messages every 
 const ROBOHASH_BASE_URL = 'https://robohash.org';
 const ROBOHASH_ASIZE = '256x256';
 const ROBOHASH_SETS = {
-  Robopocalypse: 'set1',
-  Monsterstein: 'set2',
-  Roboheads: 'set3',
-  Kittens: 'set4',
-  TechsupportResistance: 'set5',
-  any: 'any',
+    Robopocalypse: 'set1',
+    Monsterstein: 'set2',
+    Roboheads: 'set3',
+    Kittens: 'set4',
+    TechsupportResistance: 'set5',
+    any: 'any',
 };
 
 const buildMyRobohashUrl = (name) => {
-  return `${ROBOHASH_BASE_URL}/${name}.png?size=${ROBOHASH_ASIZE}&set=${ROBOHASH_SETS['Robopocalypse']}`;
+    return `${ROBOHASH_BASE_URL}/${name}.png?size=${ROBOHASH_ASIZE}&set=${ROBOHASH_SETS['Robopocalypse']}`;
 };
 ///////////////////////
 // END  ROBOHASH ONLINE AVATAR SERVICE CONSTANTS
@@ -110,7 +108,7 @@ axios.defaults.headers.common['Origin'] = `${API_HOST_IP}`;
 //// axios.defaults.headers.common['Accept'] = '*/*';
 axios.defaults.headers.common['Connection'] = 'keep-alive';
 axios.defaults.headers.common['Content-Type'] =
-  'application/json; charset=utf-8';
+    'application/json; charset=utf-8';
 ////axios.defaults.headers.common['Cache-Control'] =
 ////('max-age=0, private, must-revalidate');
 // axios.defaults.headers.common["Access-Control-Request-Headers"] = "X-Custom-Header-project; X-Requested-With; etc...";
@@ -120,15 +118,15 @@ axios.defaults.headers.common['Content-Type'] =
 // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 // axios.defaults.headers.post["Content-Type"] =   "application/x-www-form-urlencoded";
-/** 
+/**
  * curl -H "Origin: http://example.com" \
-  -H "Access-Control-Request-Method: POST" \
-  -H "Access-Control-Request-Headers: X-Requested-With" \
-  -X OPTIONS --verbose \
-  https://www.googleapis.com/discovery/v1/apis?fields=
+ -H "Access-Control-Request-Method: POST" \
+ -H "Access-Control-Request-Headers: X-Requested-With" \
+ -X OPTIONS --verbose \
+ https://www.googleapis.com/discovery/v1/apis?fields=
 
- * 
-*/
+ *
+ */
 
 // Utility http/s, devise and axios functions
 
@@ -137,19 +135,19 @@ axios.defaults.headers.common['Content-Type'] =
 ///////////////////////////
 
 const isAuthnObjectInvalid = (authn) => {
-  if (
-    authn == null ||
-    authn == undefined ||
-    !authn?.accessToken ||
-    !authn?.tokenType ||
-    !authn?.expiry ||
-    !authn?.client ||
-    !authn?.uid
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+    if (
+        authn == null ||
+        authn == undefined ||
+        !authn?.accessToken ||
+        !authn?.tokenType ||
+        !authn?.expiry ||
+        !authn?.client ||
+        !authn?.uid
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 // //////////////////////////////
@@ -208,18 +206,18 @@ const isAuthnObjectInvalid = (authn) => {
 ///////////////////////////
 
 const isUserProfileObjectInvalid = (profile) => {
-  if (
-    profile == null ||
-    profile == undefined ||
-    !profile?.id ||
-    !profile?.uid ||
-    profile?.id == '' ||
-    profile?.uid == ''
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+    if (
+        profile == null ||
+        profile == undefined ||
+        !profile?.id ||
+        !profile?.uid ||
+        profile?.id == '' ||
+        profile?.uid == ''
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 //////////////////////////////
@@ -227,58 +225,58 @@ const isUserProfileObjectInvalid = (profile) => {
 ///////////////////////////
 
 const isUserProfileObjectIncomplete = (profile) => {
-  if (isUserProfileObjectInvalid(profile)) {
-    // Make sure first it is not broken or invalid
-    console.log(
-      'ERROR isUserProfileObjectIncomplete=TRUE ;; profile=',
-      profile
-    );
-  } else if (
-    // we care mainly about govId and b-e required parameters for signup
-    profile?.firstName == '' ||
-    profile?.firstName == null ||
-    profile?.firstName == undefined ||
-    profile?.lastName == '' ||
-    profile?.lastName == null ||
-    profile?.lastName == undefined ||
-    profile?.govId == '' ||
-    profile?.govId == null ||
-    profile?.govId == undefined
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+    if (isUserProfileObjectInvalid(profile)) {
+        // Make sure first it is not broken or invalid
+        console.log(
+            'ERROR isUserProfileObjectIncomplete=TRUE ;; profile=',
+            profile
+        );
+    } else if (
+        // we care mainly about govId and b-e required parameters for signup
+        profile?.firstName == '' ||
+        profile?.firstName == null ||
+        profile?.firstName == undefined ||
+        profile?.lastName == '' ||
+        profile?.lastName == null ||
+        profile?.lastName == undefined ||
+        profile?.govId == '' ||
+        profile?.govId == null ||
+        profile?.govId == undefined
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 /////////////////////////
 // converts userAuthn object to the equivalent HTTP headers entries
 ///////////////////
 const authnToHttpHeaders = (authn) => {
-  const authnHttpHeaders = {
-    'access-token': authn.accessToken,
-    'token-type': authn.tokenType ?? 'Bearer', // "Bearer" or tokenType: res.headers["token-type"],
-    'client': authn.client,
-    'expiry': authn.expiry,
-    'uid': authn.uid,
-  };
+    const authnHttpHeaders = {
+        'access-token': authn.accessToken,
+        'token-type': authn.tokenType ?? 'Bearer', // "Bearer" or tokenType: res.headers["token-type"],
+        'client': authn.client,
+        'expiry': authn.expiry,
+        'uid': authn.uid,
+    };
 
-  return authnHttpHeaders;
+    return authnHttpHeaders;
 };
 
 ///////////////////////////////////////////
 // converts userAuthn object to the equivalent HTTP headers entries
 /////////////////////
 const deviseAuthnToHttpHeaders = (authn) => {
-  const deviseAuthnHttpHeaders = {
-    'access-token': authn.accessToken,
-    'token-type': 'Bearer', // or tokenType: res.headers["token-type"],
-    'client': authn.client,
-    'expiry': authn.expiry,
-    'uid': authn.uid,
-  };
+    const deviseAuthnHttpHeaders = {
+        'access-token': authn.accessToken,
+        'token-type': 'Bearer', // or tokenType: res.headers["token-type"],
+        'client': authn.client,
+        'expiry': authn.expiry,
+        'uid': authn.uid,
+    };
 
-  return deviseAuthnHttpHeaders;
+    return deviseAuthnHttpHeaders;
 };
 
 ////////////////////////
@@ -286,128 +284,101 @@ const deviseAuthnToHttpHeaders = (authn) => {
 // NOTE subjec to to change and experiements because of CORS
 ///////////////////////
 const reqAuthnToHeaders = (authn) => {
-  const headers = {
-    'access-token': authn.accessToken,
-    'token-type': authn.tokenType ?? 'Bearer', // "Bearer" or tokenType: res.headers["token-type"],
-    'client': authn.client,
-    'expiry': authn.expiry,
-    'uid': authn.uid,
-    'Content-Type': 'application/json;charset=UTF-8',
-    'Access-Control-Allow-Origin': '*',
-    'Accept': '*/*',
-    'Host': '127.0.0.1:3001',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
-  };
+    const headers = {
+        'access-token': authn.accessToken,
+        'token-type': authn.tokenType ?? 'Bearer', // "Bearer" or tokenType: res.headers["token-type"],
+        'client': authn.client,
+        'expiry': authn.expiry,
+        'uid': authn.uid,
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Accept': '*/*',
+        'Host': '127.0.0.1:3001',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+    };
 
-  // timeout: 3000,
-  // params: {
-  //   id: id,
-  //   lat: coords.lat,
-  //   lng: coords.lng,
-  //   radius: radius,
-  // },
-  return headers;
+    // timeout: 3000,
+    // params: {
+    //   id: id,
+    //   lat: coords.lat,
+    //   lng: coords.lng,
+    //   radius: radius,
+    // },
+    return headers;
 };
 
 ////////////////////////////////////////////////////////
 ///// converts users data from response to userProfile object
 //////////////////////////////////////
 const userProfileFromHttpRes = (res) => {
-  /** res.data.data, */
-  // userProfile {}:
-  let userProfile = {
-    address: null,
-    allowPasswordChange: null,
-    avatar: null,
-    email: null,
-    firstName: null,
-    govId: null,
-    id: null,
-    lastLoggedIn: null,
-    lastActive: null,
-    lastName: null,
-    preferredName: null,
-    provider: null,
-    uid: null,
-    lat: null,
-    lng: null,
-  };
+    /** res.data.data, */
+        // userProfile {}:
+    let userProfile = {
+            address: null,
+            allowPasswordChange: null,
+            avatar: null,
+            email: null,
+            firstName: null,
+            govId: null,
+            id: null,
+            lastLoggedIn: null,
+            lastActive: null,
+            lastName: null,
+            preferredName: null,
+            provider: null,
+            uid: null,
+            lat: null,
+            lng: null,
+        };
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-  //   res.data,
-  //   res.status,
-  //   res.statusText,
-  //   res.headers
-  //   // res.request
-  // );
-  if (res.status == 200) {
-    userProfile = {
-      address: res.data.data.address,
-      allowPasswordChange: res.data.data.allow_password_change,
-      avatar: res.data.data.avatar,
-      email: res.data.data.email,
-      firstName: res.data.data.first_name,
-      govId: res.data.data.gov_id,
-      id: res.data.data.id,
-      lastLoggedIn: res.data.data.last_loggedin,
-      lastActive: res.data.data.last_active,
-      lastName: res.data.data.last_name,
-      preferredName: res.data.data.preferred_name,
-      provider: res.data.data.provider,
-      uid: res.data.data.uid,
-      lat: res.data.data.default_lat,
-      lng: res.data.data.default_lng,
-    };
-  }
+    // console.log(
+    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
+    //   res.data,
+    //   res.status,
+    //   res.statusText,
+    //   res.headers
+    //   // res.request
+    // );
+    if (res.status == 200) {
+        userProfile = {
+            address: res.data.data.address,
+            allowPasswordChange: res.data.data.allow_password_change,
+            avatar: res.data.data.avatar,
+            email: res.data.data.email,
+            firstName: res.data.data.first_name,
+            govId: res.data.data.gov_id,
+            id: res.data.data.id,
+            lastLoggedIn: res.data.data.last_loggedin,
+            lastActive: res.data.data.last_active,
+            lastName: res.data.data.last_name,
+            preferredName: res.data.data.preferred_name,
+            provider: res.data.data.provider,
+            uid: res.data.data.uid,
+            lat: res.data.data.default_lat,
+            lng: res.data.data.default_lng,
+        };
+    }
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## USER PROFILE RETURN OBJECT: {userProfile, ...}',
-  //   { userProfile: userProfile, status: res.status }
-  // );
+    // console.log(
+    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE RETURN OBJECT: {userProfile, ...}',
+    //   { userProfile: userProfile, status: res.status }
+    // );
 
-  // return { userProfile: userProfile, status: res.status };
-  return userProfile;
+    // return { userProfile: userProfile, status: res.status };
+    return userProfile;
 };
 
 ////////////////////////////////////////////////////////
 ///// set status from response or error to status object
 //////////////////////////////////////
 const statusFromHttpResOrErr = (resOrErr) => {
-  /** res.data.data, */
-  let status = STATUS_WAITING;
-  let message = 'UNDETERMINATE';
+    /** res.data.data, */
+    let status = STATUS_WAITING;
+    let message = 'UNDETERMINATE';
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-  //   resOrErr ??
-  //     'resOrErr: Response Or Error is null. Possibly XHR Query or Network Error',
-  //   resOrErr?.data,
-  //   resOrErr?.status,
-  //   resOrErr?.statusText,
-  //   resOrErr?.headers,
-  //   resOrErr?.response ?? 'OK NO ERR RESPONSE'
-  //   // res.request
-  // );
-
-  // if resOrErr is an error with the shape
-  // {response:
-  //      {headers:, status: , statusText:, data:
-  //                                   {status:"error", errors:[,]}
-  //        }
-  //     }
-  if (resOrErr?.response) {
-    resOrErr = resOrErr.response;
-  }
-  // QUERY error
-  else if (resOrErr?.message) {
-    throw Error;
-  }
-  // else regular response
-  else {
     // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
+    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
     //   resOrErr ??
     //     'resOrErr: Response Or Error is null. Possibly XHR Query or Network Error',
     //   resOrErr?.data,
@@ -417,94 +388,94 @@ const statusFromHttpResOrErr = (resOrErr) => {
     //   resOrErr?.response ?? 'OK NO ERR RESPONSE'
     //   // res.request
     // );
-    if (resOrErr?.status >= 100 && resOrErr?.status < 300) {
-      status = STATUS_READY;
-      message = [
-        resOrErr?.data?.message ??
-          'STATUS READY' + resOrErr.status + resOrErr.statusText,
-      ];
-    } else {
-      status = STATUS_READY;
-      message = [
-        resOrErr?.data ??
-          'STATUS READY' + resOrErr.status + resOrErr.statusText,
-      ];
+
+    // if resOrErr is an error with the shape
+    // {response:
+    //      {headers:, status: , statusText:, data:
+    //                                   {status:"error", errors:[,]}
+    //        }
+    //     }
+    if (resOrErr?.response) {
+        resOrErr = resOrErr.response;
     }
-  }
+    // QUERY error
+    else if (resOrErr?.message) {
+        throw Error;
+    }
+    // else regular response
+    else {
+        // console.log(
+        //   'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
+        //   resOrErr ??
+        //     'resOrErr: Response Or Error is null. Possibly XHR Query or Network Error',
+        //   resOrErr?.data,
+        //   resOrErr?.status,
+        //   resOrErr?.statusText,
+        //   resOrErr?.headers,
+        //   resOrErr?.response ?? 'OK NO ERR RESPONSE'
+        //   // res.request
+        // );
+        if (resOrErr?.status >= 100 && resOrErr?.status < 300) {
+            status = STATUS_READY;
+            message = [
+                resOrErr?.data?.message ??
+                'STATUS READY' + resOrErr.status + resOrErr.statusText,
+            ];
+        } else {
+            status = STATUS_READY;
+            message = [
+                resOrErr?.data ??
+                'STATUS READY' + resOrErr.status + resOrErr.statusText,
+            ];
+        }
+    }
 
-  if (resOrErr?.status >= 400 && resOrErr?.status < 500) {
-    status = STATUS_ERROR;
-    message = [
-      resOrErr?.message
-        ? resOrErr?.message
-        : 'ERROR: DEBUG REQUEST NOT SENT: WRONG APP REQUEST FORMAT',
-    ];
-    message.push(
-      resOrErr?.data?.errors
-        ? JSON.stringify(resOrErr?.data?.errors)
-        : 'ERROR: DEBUG NO ERROR RESPONSE OR ERROR DATA'
-    );
+    if (resOrErr?.status >= 400 && resOrErr?.status < 500) {
+        status = STATUS_ERROR;
+        message = [
+            resOrErr?.message
+                ? resOrErr?.message
+                : 'ERROR: DEBUG REQUEST NOT SENT: WRONG APP REQUEST FORMAT',
+        ];
+        message.push(
+            resOrErr?.data?.errors
+                ? JSON.stringify(resOrErr?.data?.errors)
+                : 'ERROR: DEBUG NO ERROR RESPONSE OR ERROR DATA'
+        );
 
-    message.push(
-      JSON.stringify(
-        resOrErr?.headers
-          ? JSON.stringify(resOrErr?.headers)
-          : 'ERROR: DEBUG NO ERROR RESPONSE HEADERS'
-      )
-    );
-  } else {
-    message = [
-      resOrErr?.response ?? 'ERROR: HTTP Response is UNDEFINED. STATUS ERROR',
-    ];
-  }
+        message.push(
+            JSON.stringify(
+                resOrErr?.headers
+                    ? JSON.stringify(resOrErr?.headers)
+                    : 'ERROR: DEBUG NO ERROR RESPONSE HEADERS'
+            )
+        );
+    } else {
+        message = [
+            resOrErr?.response ?? 'ERROR: HTTP Response is UNDEFINED. STATUS ERROR',
+        ];
+    }
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
-  //   status,
-  //   message
-  // );
+    // console.log(
+    //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
+    //   status,
+    //   message
+    // );
 
-  // return { userProfile: userProfile, status: res.status };
-  return { status: status, message: JSON.stringify(message) };
+    // return { userProfile: userProfile, status: res.status };
+    return {status: status, message: JSON.stringify(message)};
 };
 
 ////////////////////////////////////////////////////////
 ///// New set status from response to status object
 //////////////////////////////////////
 const statusFromHttpRes = (res) => {
-  /** res.data.data, */
-  let status = STATUS_WAITING;
-  let message = 'RES SUCCESS';
+    /** res.data.data, */
+    let status = STATUS_WAITING;
+    let message = 'RES SUCCESS';
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-  //   res ??
-  //     'res: Response Or Error is null. Possibly XHR Query or Network Error',
-  //   res?.data,
-  //   res?.status,
-  //   res?.statusText,
-  //   res?.headers,
-  //   res?.response ?? 'OK NO ERR RESPONSE'
-  //   // res.request
-  // );
-
-  // if err is an error with the shape
-  // {response:
-  //      {headers:, status: , statusText:, data:
-  //                                   {status:"error", errors:[,]}
-  //        }
-  //     }
-  if (res?.response) {
-    res = res.response;
-  }
-  // QUERY error
-  else if (res?.message) {
-    throw Error;
-  }
-  // else regular response
-  else {
     // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
+    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
     //   res ??
     //     'res: Response Or Error is null. Possibly XHR Query or Network Error',
     //   res?.data,
@@ -514,281 +485,308 @@ const statusFromHttpRes = (res) => {
     //   res?.response ?? 'OK NO ERR RESPONSE'
     //   // res.request
     // );
-    if (res?.status >= 100 && res?.status < 300) {
-      status = STATUS_READY;
-      message = [
-        res?.data?.message ?? 'STATUS READY' + res.status + res.statusText,
-      ];
-    } else {
-      status = STATUS_READY;
-      message = [res?.data ?? 'STATUS READY' + res.status + res.statusText];
+
+    // if err is an error with the shape
+    // {response:
+    //      {headers:, status: , statusText:, data:
+    //                                   {status:"error", errors:[,]}
+    //        }
+    //     }
+    if (res?.response) {
+        res = res.response;
     }
-  }
+    // QUERY error
+    else if (res?.message) {
+        throw Error;
+    }
+    // else regular response
+    else {
+        // console.log(
+        //   'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
+        //   res ??
+        //     'res: Response Or Error is null. Possibly XHR Query or Network Error',
+        //   res?.data,
+        //   res?.status,
+        //   res?.statusText,
+        //   res?.headers,
+        //   res?.response ?? 'OK NO ERR RESPONSE'
+        //   // res.request
+        // );
+        if (res?.status >= 100 && res?.status < 300) {
+            status = STATUS_READY;
+            message = [
+                res?.data?.message ?? 'STATUS READY' + res.status + res.statusText,
+            ];
+        } else {
+            status = STATUS_READY;
+            message = [res?.data ?? 'STATUS READY' + res.status + res.statusText];
+        }
+    }
 
-  if (res?.status >= 400 && res?.status < 500) {
-    status = STATUS_ERROR;
-    message = [
-      res?.message
-        ? res?.message
-        : 'ERROR: DEBUG REQUEST NOT SENT: WRONG APP REQUEST FORMAT',
-    ];
-    message.push(
-      res?.data?.errors
-        ? JSON.stringify(res?.data?.errors)
-        : 'ERROR: DEBUG NO ERROR RESPONSE OR ERROR DATA'
-    );
+    if (res?.status >= 400 && res?.status < 500) {
+        status = STATUS_ERROR;
+        message = [
+            res?.message
+                ? res?.message
+                : 'ERROR: DEBUG REQUEST NOT SENT: WRONG APP REQUEST FORMAT',
+        ];
+        message.push(
+            res?.data?.errors
+                ? JSON.stringify(res?.data?.errors)
+                : 'ERROR: DEBUG NO ERROR RESPONSE OR ERROR DATA'
+        );
 
-    message.push(
-      JSON.stringify(
-        res?.headers
-          ? JSON.stringify(res?.headers)
-          : 'ERROR: DEBUG NO ERROR RESPONSE HEADERS'
-      )
-    );
-  } else {
-    message = [
-      res?.response ?? 'ERROR: HTTP Response is UNDEFINED. STATUS ERROR',
-    ];
-  }
+        message.push(
+            JSON.stringify(
+                res?.headers
+                    ? JSON.stringify(res?.headers)
+                    : 'ERROR: DEBUG NO ERROR RESPONSE HEADERS'
+            )
+        );
+    } else {
+        message = [
+            res?.response ?? 'ERROR: HTTP Response is UNDEFINED. STATUS ERROR',
+        ];
+    }
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
-  //   status,
-  //   message
-  // );
+    // console.log(
+    //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
+    //   status,
+    //   message
+    // );
 
-  // return { userProfile: userProfile, status: res.status };
-  return { status: status, message: JSON.stringify(message) };
+    // return { userProfile: userProfile, status: res.status };
+    return {status: status, message: JSON.stringify(message)};
 };
 
 ////////////////////////////////////////////////////////
 ///// NEW set status from  error to status object
 //////////////////////////////////////
 const statusFromHttpErr = (err) => {
-  /** err.data.data, */
-  let status = STATUS_WAITING;
-  let body = {};
+    /** err.data.data, */
+    let status = STATUS_WAITING;
+    let body = {};
 
-  if (
-    err?.response?.status == 401 || // Unauthorized
-    err?.response?.status == 422 || // Unprocessable
-    err?.response?.status == 500 // internal server error
-  ) {
-    status = STATUS_ERROR;
-    body = { ...body, ...err?.response.data.errors };
-  }
+    if (
+        err?.response?.status == 401 || // Unauthorized
+        err?.response?.status == 422 || // Unprocessable
+        err?.response?.status == 500 // internal server error
+    ) {
+        status = STATUS_ERROR;
+        body = {...body, ...err?.response.data.errors};
+    }
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-  //   err ??
-  //     'err: Response Or Error is null. Possibly XHR Query or Network Error',
-  //   err?.data,
-  //   err?.status,
-  //   err?.statusText,
-  //   err?.headers,
-  //   err?.response ?? 'OK NO ERR RESPONSE'
-  //   // res.request
-  // );
+    // console.log(
+    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
+    //   err ??
+    //     'err: Response Or Error is null. Possibly XHR Query or Network Error',
+    //   err?.data,
+    //   err?.status,
+    //   err?.statusText,
+    //   err?.headers,
+    //   err?.response ?? 'OK NO ERR RESPONSE'
+    //   // res.request
+    // );
 
-  // if err is an error with the shape
-  // {response:
-  //      {headers:, status: , statusText:, data:
-  //                                   {status:"error", errors:[,]}
-  //        }
-  //     }
-  // if (err?.response) {
-  //   err = err.response;
-  // }
-  // // QUERY error
-  // else if (err?.message) {
-  //   throw Error;
-  // }
-  // // else regular response
-  // else {
-  //   console.log(
-  //     'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
-  //     err ??
-  //       'err: Response Or Error is null. Possibly XHR Query or Network Error',
-  //     err?.data,
-  //     err?.status,
-  //     err?.statusText,
-  //     err?.headers,
-  //     err?.response ?? 'OK NO ERR RESPONSE'
-  //     // res.request
-  //   );
-  //   if (err?.status >= 100 && err?.status < 300) {
-  //     status = STATUS_READY;
-  //     message = [
-  //       err?.data?.message ?? 'STATUS READY' + err.status + err.statusText,
-  //     ];
-  //   } else {
-  //     status = STATUS_READY;
-  //     message = [err?.data ?? 'STATUS READY' + err.status + err.statusText];
-  //   }
-  // }
+    // if err is an error with the shape
+    // {response:
+    //      {headers:, status: , statusText:, data:
+    //                                   {status:"error", errors:[,]}
+    //        }
+    //     }
+    // if (err?.response) {
+    //   err = err.response;
+    // }
+    // // QUERY error
+    // else if (err?.message) {
+    //   throw Error;
+    // }
+    // // else regular response
+    // else {
+    //   console.log(
+    //     'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
+    //     err ??
+    //       'err: Response Or Error is null. Possibly XHR Query or Network Error',
+    //     err?.data,
+    //     err?.status,
+    //     err?.statusText,
+    //     err?.headers,
+    //     err?.response ?? 'OK NO ERR RESPONSE'
+    //     // res.request
+    //   );
+    //   if (err?.status >= 100 && err?.status < 300) {
+    //     status = STATUS_READY;
+    //     message = [
+    //       err?.data?.message ?? 'STATUS READY' + err.status + err.statusText,
+    //     ];
+    //   } else {
+    //     status = STATUS_READY;
+    //     message = [err?.data ?? 'STATUS READY' + err.status + err.statusText];
+    //   }
+    // }
 
-  // if (err?.status >= 400 && err?.status < 500) {
-  //   status = STATUS_ERROR;
-  //   message = [
-  //     err?.message
-  //       ? err?.message
-  //       : 'ERROR: DEBUG REQUEST NOT SENT: WRONG APP REQUEST FORMAT',
-  //   ];
-  //   message.push(
-  //     err?.data?.errors
-  //       ? JSON.stringify(err?.data?.errors)
-  //       : 'ERROR: DEBUG NO ERROR RESPONSE OR ERROR DATA'
-  //   );
+    // if (err?.status >= 400 && err?.status < 500) {
+    //   status = STATUS_ERROR;
+    //   message = [
+    //     err?.message
+    //       ? err?.message
+    //       : 'ERROR: DEBUG REQUEST NOT SENT: WRONG APP REQUEST FORMAT',
+    //   ];
+    //   message.push(
+    //     err?.data?.errors
+    //       ? JSON.stringify(err?.data?.errors)
+    //       : 'ERROR: DEBUG NO ERROR RESPONSE OR ERROR DATA'
+    //   );
 
-  //   message.push(
-  //     JSON.stringify(
-  //       err?.headers
-  //         ? JSON.stringify(err?.headers)
-  //         : 'ERROR: DEBUG NO ERROR RESPONSE HEADERS'
-  //     )
-  //   );
-  // } else {
-  //   message = [
-  //     err?.response ?? 'ERROR: HTTP Response is UNDEFINED. STATUS ERROR',
-  //   ];
-  // }
+    //   message.push(
+    //     JSON.stringify(
+    //       err?.headers
+    //         ? JSON.stringify(err?.headers)
+    //         : 'ERROR: DEBUG NO ERROR RESPONSE HEADERS'
+    //     )
+    //   );
+    // } else {
+    //   message = [
+    //     err?.response ?? 'ERROR: HTTP Response is UNDEFINED. STATUS ERROR',
+    //   ];
+    // }
 
-  // console.log(
-  //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
-  //   status,
-  //   message
-  // );
+    // console.log(
+    //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
+    //   status,
+    //   message
+    // );
 
-  // return { userProfile: userProfile, status: res.status };
-  return { status: status, body: body };
+    // return { userProfile: userProfile, status: res.status };
+    return {status: status, body: body};
 };
 
 //
 // Returns refreshed device authn headers in case of change or undef or empty, otherwise keep the same
 //
 const deviseAuthnResRefresh = (previousAuthn, res) => {
-  // CASE OF missing or broken res headers because of network or query setup error...
-  // keep previousAuthnToken WARNING: initial Authn response missing user ID
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
-  if (res == null || res == undefined) {
+    // CASE OF missing or broken res headers because of network or query setup error...
+    // keep previousAuthnToken WARNING: initial Authn response missing user ID
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
+    if (res == null || res == undefined) {
+        // console.log(
+        //   'DEBUG ### deviceTokenAuthRefresh RESPONSE IS NULL OR UNDEFINED, HEADERs from THEN= HTTP HEADERS'
+        // );
+        return previousAuthn;
+    }
+    // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
+
+    // CASE OF catch with err with the shape err: {response: {headers:, data:,...}}...
+    // devise sends here a valid token, ecept that res = res.response
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
+    if (res.response?.headers) {
+        // console.log(
+        //   'DEBUG ### deviceTokenAuthRefresh RESPONSE exists OR with HEADERs from Catch err headers= HTTP HEADERS'
+        // );
+
+        return previousAuthn;
+    }
+    // END CASE OF  OF catch with err with the shape err: {response: {headers:, data:,...}}...
+
     // console.log(
-    //   'DEBUG ### deviceTokenAuthRefresh RESPONSE IS NULL OR UNDEFINED, HEADERs from THEN= HTTP HEADERS'
-    // );
-    return previousAuthn;
-  }
-  // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
-
-  // CASE OF catch with err with the shape err: {response: {headers:, data:,...}}...
-  // devise sends here a valid token, ecept that res = res.response
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
-  if (res.response?.headers) {
-    // console.log(
-    //   'DEBUG ### deviceTokenAuthRefresh RESPONSE exists OR with HEADERs from Catch err headers= HTTP HEADERS'
+    //   'DEBUG ### deviceTokenAuthRefresh HEADERs from THEN= HTTP HEADERS',
+    //   {
+    //     acessToken: res?.headers['access-token'],
+    //     tokenType: res?.headers['token-type'],
+    //     expiry: res?.headers['expiry'],
+    //     client: res?.headers['client'],
+    //     uid: res?.headers['uid'],
+    //   }
     // );
 
-    return previousAuthn;
-  }
-  // END CASE OF  OF catch with err with the shape err: {response: {headers:, data:,...}}...
+    const responseAccessToken = res.headers['access-token'];
+    const responseClient = res.headers['client']; // TODO check for security with this later
+    const responseTokenType = res.headers['token-type'];
+    const responseExpiry = res.headers['expiry'];
+    const responseUid = res.headers['uid']; // TODO check with security with this later
 
-  // console.log(
-  //   'DEBUG ### deviceTokenAuthRefresh HEADERs from THEN= HTTP HEADERS',
-  //   {
-  //     acessToken: res?.headers['access-token'],
-  //     tokenType: res?.headers['token-type'],
-  //     expiry: res?.headers['expiry'],
-  //     client: res?.headers['client'],
-  //     uid: res?.headers['uid'],
-  //   }
-  // );
+    // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
+    if (previousAuthn == null || previousAuthn == undefined) {
+        return {
+            accessToken: responseAccessToken,
+            tokenType: responseTokenType,
+            client: responseClient,
+            expiry: responseExpiry,
+            uid: responseUid,
+            // id: "", NOTE: no id here, needs to be re-combined from userProfile.id
+        };
+    }
+    // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
 
-  const responseAccessToken = res.headers['access-token'];
-  const responseClient = res.headers['client']; // TODO check for security with this later
-  const responseTokenType = res.headers['token-type'];
-  const responseExpiry = res.headers['expiry'];
-  const responseUid = res.headers['uid']; // TODO check with security with this later
+    // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
+    // in this case skip refresh and return same previousAuthn
+    if (responseExpiry < previousAuthn.expiry) {
+        let refreshedAccessToken = previousAuthn.accessToken;
+        let refreshedClient = previousAuthn.client;
+        let refreshedExpiry = previousAuthn.expiry;
+        let refreshedTokenType = 'Bearer'; // previousAuthn.tokenType;
+        let refreshedUid = previousAuthn.uid;
+        // authnCredentials
+        const refreshedAuthn = {
+            accessToken: refreshedAccessToken,
+            tokenType: 'Bearer', // refreshedTokenType, // res.headers["token-type"], // Should always be "Bearer"
+            client: refreshedClient, // previousAuthn.client, previousAuthn.client,
+            expiry: refreshedExpiry,
+            uid: refreshedUid, // previousAuthn.uid,
+            // id: previousAuthn?.id,
+        };
+        // console.log(
+        //   'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
+        //   refreshedAuthn
+        // );
 
-  // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
-  if (previousAuthn == null || previousAuthn == undefined) {
-    return {
-      accessToken: responseAccessToken,
-      tokenType: responseTokenType,
-      client: responseClient,
-      expiry: responseExpiry,
-      uid: responseUid,
-      // id: "", NOTE: no id here, needs to be re-combined from userProfile.id
-    };
-  }
-  // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
+        return refreshedAuthn;
+    }
+    // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
 
-  // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
-  // in this case skip refresh and return same previousAuthn
-  if (responseExpiry < previousAuthn.expiry) {
-    let refreshedAccessToken = previousAuthn.accessToken;
-    let refreshedClient = previousAuthn.client;
-    let refreshedExpiry = previousAuthn.expiry;
-    let refreshedTokenType = 'Bearer'; // previousAuthn.tokenType;
-    let refreshedUid = previousAuthn.uid;
+    // BEGIN CASE of response exipiry more recent than previousAuthn.expiry
+    // fill in empty response fields with valid data from previousAuthn, keep the rest
+    let refreshedAccessToken = null;
+    let refreshedClient = null;
+    let refreshedExpiry = null;
+
+    if (responseAccessToken != '' && responseAccessToken != undefined) {
+        refreshedAccessToken = responseAccessToken;
+    } else {
+        refreshedAccessToken = previousAuthn.accessToken;
+    }
+
+    if (responseClient != '' && responseClient != undefined) {
+        refreshedClient = responseClient;
+    } else {
+        refreshedClient = previousAuthn.client;
+    }
+
+    if (responseExpiry != '' && responseExpiry != undefined) {
+        refreshedExpiry = responseExpiry;
+    } else {
+        refreshedExpiry = previousAuthn.expiry;
+    }
+
     // authnCredentials
     const refreshedAuthn = {
-      accessToken: refreshedAccessToken,
-      tokenType: 'Bearer', // refreshedTokenType, // res.headers["token-type"], // Should always be "Bearer"
-      client: refreshedClient, // previousAuthn.client, previousAuthn.client,
-      expiry: refreshedExpiry,
-      uid: refreshedUid, // previousAuthn.uid,
-      // id: previousAuthn?.id,
+        accessToken: refreshedAccessToken,
+        tokenType: 'Bearer', //responseTokenType, // res.headers["token-type"], // Should always be "Bearer"
+        client: refreshedClient, // previousAuthn.client, previousAuthn.client,
+        expiry: refreshedExpiry,
+        uid: responseUid, // previousAuthn.uid,
+        // id: previousAuthn?.id,
     };
     // console.log(
-    //   'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
+    //   'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? AUTHN =',
     //   refreshedAuthn
     // );
 
     return refreshedAuthn;
-  }
-  // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
-
-  // BEGIN CASE of response exipiry more recent than previousAuthn.expiry
-  // fill in empty response fields with valid data from previousAuthn, keep the rest
-  let refreshedAccessToken = null;
-  let refreshedClient = null;
-  let refreshedExpiry = null;
-
-  if (responseAccessToken != '' && responseAccessToken != undefined) {
-    refreshedAccessToken = responseAccessToken;
-  } else {
-    refreshedAccessToken = previousAuthn.accessToken;
-  }
-
-  if (responseClient != '' && responseClient != undefined) {
-    refreshedClient = responseClient;
-  } else {
-    refreshedClient = previousAuthn.client;
-  }
-
-  if (responseExpiry != '' && responseExpiry != undefined) {
-    refreshedExpiry = responseExpiry;
-  } else {
-    refreshedExpiry = previousAuthn.expiry;
-  }
-
-  // authnCredentials
-  const refreshedAuthn = {
-    accessToken: refreshedAccessToken,
-    tokenType: 'Bearer', //responseTokenType, // res.headers["token-type"], // Should always be "Bearer"
-    client: refreshedClient, // previousAuthn.client, previousAuthn.client,
-    expiry: refreshedExpiry,
-    uid: responseUid, // previousAuthn.uid,
-    // id: previousAuthn?.id,
-  };
-  // console.log(
-  //   'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? AUTHN =',
-  //   refreshedAuthn
-  // );
-
-  return refreshedAuthn;
 };
 
 //
@@ -796,82 +794,82 @@ const deviseAuthnResRefresh = (previousAuthn, res) => {
 // only for successful responses... see below for case of catch(err=>{})
 //
 const deviseAuthnFromRes = (previousAuthn, res) => {
-  // CASE OF missing or broken res headers because of network or query setup error...
-  // keep previousAuthnToken WARNING: initial Authn response missing user ID
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
-  if (!res || !res?.headers) {
-    if (isAuthnObjectInvalid(previousAuthn)) {
-      throw new Error('DEVISE AUTHN FROM RES ERROR');
-    } else {
-      return previousAuthn;
+    // CASE OF missing or broken res headers because of network or query setup error...
+    // keep previousAuthnToken WARNING: initial Authn response missing user ID
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
+    if (!res || !res?.headers) {
+        if (isAuthnObjectInvalid(previousAuthn)) {
+            throw new Error('DEVISE AUTHN FROM RES ERROR');
+        } else {
+            return previousAuthn;
+        }
     }
-  }
-  // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
+    // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
 
-  // console.log('DEBUG ### deviseAuthnFromRes HEADERs from THEN= HTTP HEADERS', {
-  //   acessToken: res?.headers['access-token'],
-  //   expiry: res?.headers['expiry'],
-  //   client: res?.headers['client'],
-  //   uid: res?.headers['uid'],
-  //   tokenType: res?.headers['token-type'],
-  // });
+    // console.log('DEBUG ### deviseAuthnFromRes HEADERs from THEN= HTTP HEADERS', {
+    //   acessToken: res?.headers['access-token'],
+    //   expiry: res?.headers['expiry'],
+    //   client: res?.headers['client'],
+    //   uid: res?.headers['uid'],
+    //   tokenType: res?.headers['token-type'],
+    // });
 
-  const responseAuthn = {
-    accessToken: res.headers['access-token'],
-    client: res.headers['client'], // TODO check for security with this later
-    expiry: res.headers['expiry'],
-    uid: res.headers['uid'], // TODO check with security with this later
-    tokenType: res.headers['token-type'],
-  };
+    const responseAuthn = {
+        accessToken: res.headers['access-token'],
+        client: res.headers['client'], // TODO check for security with this later
+        expiry: res.headers['expiry'],
+        uid: res.headers['uid'], // TODO check with security with this later
+        tokenType: res.headers['token-type'],
+    };
 
-  // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
-  if (!previousAuthn) {
-    return responseAuthn;
-  }
-  // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
+    // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
+    if (!previousAuthn) {
+        return responseAuthn;
+    }
+    // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
 
-  // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
-  // in this case skip refresh and return same previousAuthn
-  if (responseAuthn.expiry < previousAuthn.expiry) {
+    // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
+    // in this case skip refresh and return same previousAuthn
+    if (responseAuthn.expiry < previousAuthn.expiry) {
+        // console.log(
+        //   'DEBUG ###### deviseAuthnFromRes CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
+        //   previousAuthn
+        // );
+
+        return previousAuthn;
+    }
+    // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
+
+    // BEGIN CASE of response expiry more recent than previousAuthn.expiry
+    // start with responseAuthn values, fill in empty response fields with valid data from previousAuthn, keep the rest
+    const refreshedAuthn = {
+        ...responseAuthn,
+    };
+    if (!refreshedAuthn.accessToken) {
+        refreshedAuthn.accessToken = previousAuthn.accessToken;
+    }
+    if (!refreshedAuthn.client) {
+        refreshedAuthn.client = previousAuthn.client;
+    }
+    if (!refreshedAuthn.expiry) {
+        refreshedAuthn.expiry = previousAuthn.expiry;
+    }
+    if (!refreshedAuthn.uid) {
+        refreshedAuthn.uid = previousAuthn.uid;
+    }
+    if (!refreshedAuthn.tokenType) {
+        refreshedAuthn.tokenType = previousAuthn.tokenType ?? 'Bearer';
+    }
+
     // console.log(
-    //   'DEBUG ###### deviseAuthnFromRes CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
-    //   previousAuthn
+    //   'DEBUG ###### deviseAuthnFromRes CURRENT REFRESHED? updated between res and previous token AUTHN DID CHANGE =',
+    //   refreshedAuthn
     // );
 
-    return previousAuthn;
-  }
-  // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
-
-  // BEGIN CASE of response expiry more recent than previousAuthn.expiry
-  // start with responseAuthn values, fill in empty response fields with valid data from previousAuthn, keep the rest
-  const refreshedAuthn = {
-    ...responseAuthn,
-  };
-  if (!refreshedAuthn.accessToken) {
-    refreshedAuthn.accessToken = previousAuthn.accessToken;
-  }
-  if (!refreshedAuthn.client) {
-    refreshedAuthn.client = previousAuthn.client;
-  }
-  if (!refreshedAuthn.expiry) {
-    refreshedAuthn.expiry = previousAuthn.expiry;
-  }
-  if (!refreshedAuthn.uid) {
-    refreshedAuthn.uid = previousAuthn.uid;
-  }
-  if (!refreshedAuthn.tokenType) {
-    refreshedAuthn.tokenType = previousAuthn.tokenType ?? 'Bearer';
-  }
-
-  // console.log(
-  //   'DEBUG ###### deviseAuthnFromRes CURRENT REFRESHED? updated between res and previous token AUTHN DID CHANGE =',
-  //   refreshedAuthn
-  // );
-
-  return refreshedAuthn;
+    return refreshedAuthn;
 };
 
 //
@@ -882,84 +880,84 @@ const deviseAuthnFromRes = (previousAuthn, res) => {
 // that would require to return the previousToken, although the chain of authentication will...
 // likely be broken at that point
 const deviseAuthnFromErr = (previousAuthn, err) => {
-  // CASE OF missing or broken err headers because of network or query setup error...
-  // keep previousAuthnToken WARNING: initial Authn errponse missing user ID
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case err is null
-  if (!err?.response || !err?.response?.headers) {
-    if (isAuthnObjectInvalid(previousAuthn)) {
-      throw new Error('DEVISE AUTHN FROM RES ERROR');
-    } else {
-      return previousAuthn;
+    // CASE OF missing or broken err headers because of network or query setup error...
+    // keep previousAuthnToken WARNING: initial Authn errponse missing user ID
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case err is null
+    if (!err?.response || !err?.response?.headers) {
+        if (isAuthnObjectInvalid(previousAuthn)) {
+            throw new Error('DEVISE AUTHN FROM RES ERROR');
+        } else {
+            return previousAuthn;
+        }
     }
-  }
-  // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
+    // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
 
-  const res = err.response;
+    const res = err.response;
 
-  // console.log('DEBUG ### deviseAuthnFromErr HEADERs from THEN= HTTP HEADERS', {
-  //   acessToken: res?.headers['access-token'],
-  //   expiry: res?.headers['expiry'],
-  //   client: res?.headers['client'],
-  //   uid: res?.headers['uid'],
-  //   tokenType: res?.headers['token-type'],
-  // });
+    // console.log('DEBUG ### deviseAuthnFromErr HEADERs from THEN= HTTP HEADERS', {
+    //   acessToken: res?.headers['access-token'],
+    //   expiry: res?.headers['expiry'],
+    //   client: res?.headers['client'],
+    //   uid: res?.headers['uid'],
+    //   tokenType: res?.headers['token-type'],
+    // });
 
-  const responseAuthn = {
-    accessToken: res.headers['access-token'],
-    client: res.headers['client'], // TODO check for security with this later
-    expiry: res.headers['expiry'],
-    uid: res.headers['uid'], // TODO check with security with this later
-    tokenType: res.headers['token-type'],
-  };
+    const responseAuthn = {
+        accessToken: res.headers['access-token'],
+        client: res.headers['client'], // TODO check for security with this later
+        expiry: res.headers['expiry'],
+        uid: res.headers['uid'], // TODO check with security with this later
+        tokenType: res.headers['token-type'],
+    };
 
-  // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
-  // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-  // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
-  if (!previousAuthn) {
-    return responseAuthn;
-  }
-  // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
+    // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
+    // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
+    // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
+    if (!previousAuthn) {
+        return responseAuthn;
+    }
+    // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
 
-  // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
-  // in this case skip refresh and return same previousAuthn
-  if (responseAuthn.expiry < previousAuthn.expiry) {
+    // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
+    // in this case skip refresh and return same previousAuthn
+    if (responseAuthn.expiry < previousAuthn.expiry) {
+        // console.log(
+        //   'DEBUG ###### deviseAuthnFromErr CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
+        //   previousAuthn
+        // );
+
+        return previousAuthn;
+    }
+    // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
+
+    // BEGIN CASE of response expiry more recent than previousAuthn.expiry
+    // start with responseAuthn values, fill in empty response fields with valid data from previousAuthn, keep the rest
+    const refreshedAuthn = {
+        ...responseAuthn,
+    };
+    if (!refreshedAuthn.accessToken) {
+        refreshedAuthn.accessToken = previousAuthn.accessToken;
+    }
+    if (!refreshedAuthn.client) {
+        refreshedAuthn.client = previousAuthn.client;
+    }
+    if (!refreshedAuthn.expiry) {
+        refreshedAuthn.expiry = previousAuthn.expiry;
+    }
+    if (!refreshedAuthn.uid) {
+        refreshedAuthn.uid = previousAuthn.uid;
+    }
+    if (!refreshedAuthn.tokenType) {
+        refreshedAuthn.tokenType = previousAuthn.tokenType ?? 'Bearer';
+    }
+
     // console.log(
-    //   'DEBUG ###### deviseAuthnFromErr CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
-    //   previousAuthn
+    //   'DEBUG ###### deviseAuthnFromErr CURRENT REFRESHED? updated between res and previous token AUTHN DID CHANGE =',
+    //   refreshedAuthn
     // );
 
-    return previousAuthn;
-  }
-  // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
-
-  // BEGIN CASE of response expiry more recent than previousAuthn.expiry
-  // start with responseAuthn values, fill in empty response fields with valid data from previousAuthn, keep the rest
-  const refreshedAuthn = {
-    ...responseAuthn,
-  };
-  if (!refreshedAuthn.accessToken) {
-    refreshedAuthn.accessToken = previousAuthn.accessToken;
-  }
-  if (!refreshedAuthn.client) {
-    refreshedAuthn.client = previousAuthn.client;
-  }
-  if (!refreshedAuthn.expiry) {
-    refreshedAuthn.expiry = previousAuthn.expiry;
-  }
-  if (!refreshedAuthn.uid) {
-    refreshedAuthn.uid = previousAuthn.uid;
-  }
-  if (!refreshedAuthn.tokenType) {
-    refreshedAuthn.tokenType = previousAuthn.tokenType ?? 'Bearer';
-  }
-
-  // console.log(
-  //   'DEBUG ###### deviseAuthnFromErr CURRENT REFRESHED? updated between res and previous token AUTHN DID CHANGE =',
-  //   refreshedAuthn
-  // );
-
-  return refreshedAuthn;
+    return refreshedAuthn;
 };
 
 // //
@@ -1124,48 +1122,48 @@ const deviseAuthnFromErr = (previousAuthn, err) => {
 // };
 
 export {
-  authnToHttpHeaders,
-  deviseAuthnToHttpHeaders,
-  userProfileFromHttpRes,
-  deviseAuthnResRefresh,
-  deviseAuthnFromRes,
-  deviseAuthnFromErr,
-  buildMyRobohashUrl,
-  reqAuthnToHeaders,
-  isAuthnObjectInvalid,
-  isUserProfileObjectInvalid,
-  isUserProfileObjectIncomplete,
-  statusFromHttpResOrErr,
-  statusFromHttpErr,
-  API_HOST,
-  API_PORT,
-  API_BASE_URL,
-  API_SIGNUP_ROUTE,
-  API_SIGNUP_METHOD,
-  API_DELETE_USER_ROUTE,
-  API_DELETE_USER_METHOD,
-  API_UPDATE_USER_ROUTE,
-  API_UPDATE_USER_METHOD,
-  API_PASSWORD_UPDATE_ROUTE,
-  API_PASSWORD_UPDATE_METHOD,
-  API_SIGNIN_ROUTE,
-  API_SIGNIN_METHOD,
-  API_SIGNOUT_ROUTE,
-  API_SIGNOUT_METHOD,
-  API_ACTIVESTORAGE_DIRECTUPLOAD_ROUTE,
-  API_ACTIVESTORAGE_DIRECTUPLOAD_METHOD,
-  API_TASKS_ROUTE,
-  API_PROFILE_TASKS_ROUTE,
-  API_TASK_STATS_ROUTE,
-  API_CONVERSATIONS_ROUTE,
-  API_MESSAGES_ROUTE,
-  API_MESSAGES_METHOD,
-  API_APPSTATS_ROUTE,
-  API_APPSTATS_METHOD,
+    authnToHttpHeaders,
+    deviseAuthnToHttpHeaders,
+    userProfileFromHttpRes,
+    deviseAuthnResRefresh,
+    deviseAuthnFromRes,
+    deviseAuthnFromErr,
+    buildMyRobohashUrl,
+    reqAuthnToHeaders,
+    isAuthnObjectInvalid,
+    isUserProfileObjectInvalid,
+    isUserProfileObjectIncomplete,
+    statusFromHttpResOrErr,
+    statusFromHttpErr,
+    API_HOST,
+    API_PORT,
+    API_BASE_URL,
+    API_SIGNUP_ROUTE,
+    API_SIGNUP_METHOD,
+    API_DELETE_USER_ROUTE,
+    API_DELETE_USER_METHOD,
+    API_UPDATE_USER_ROUTE,
+    API_UPDATE_USER_METHOD,
+    API_PASSWORD_UPDATE_ROUTE,
+    API_PASSWORD_UPDATE_METHOD,
+    API_SIGNIN_ROUTE,
+    API_SIGNIN_METHOD,
+    API_SIGNOUT_ROUTE,
+    API_SIGNOUT_METHOD,
+    API_ACTIVESTORAGE_DIRECTUPLOAD_ROUTE,
+    API_ACTIVESTORAGE_DIRECTUPLOAD_METHOD,
+    API_TASKS_ROUTE,
+    API_PROFILE_TASKS_ROUTE,
+    API_TASK_STATS_ROUTE,
+    API_CONVERSATIONS_ROUTE,
+    API_MESSAGES_ROUTE,
+    API_MESSAGES_METHOD,
+    API_APPSTATS_ROUTE,
+    API_APPSTATS_METHOD,
 };
-/**************************************************** 
+/****************************************************
 
-const config = {
+ const config = {
   baseURL: API_BASE_URL,
   // timeout: 5000,
   // headers: { "X-Custom-Header-project": "project8" },
@@ -1205,70 +1203,70 @@ const config = {
   timeout: 3000,
 };
 
-axios.defaults.baseURL = API_BASE_URL;
-// axios.defaults.headers.common["Authorization"] = "Bearer undefined";
-// axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-axios.defaults.headers.common["Origin"] = "http://localhost:3001";
-http: axios.defaults.headers.common["Accept"] = "*
-/*";
-axios.defaults.headers.common["Connection"] = "keep-alive";
-axios.defaults.headers.common["Content-Type"] =
-  "application/json; charset=utf-8";
-axios.defaults.headers.common["Cache-Control"] =
-  "max-age=0, private, must-revalidate";
-// axios.defaults.headers.common["Access-Control-Request-Headers"] = "X-Custom-Header-project; X-Requested-With; etc...";
-// axios.defaults.headers.common["X-Requested-With"] = "this app";
-// axios.defaults.headers.common["X-Custom-Header-project"] = "this proj";
-// axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-// axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-// axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-// axios.defaults.headers.post["Content-Type"] =   "application/x-www-form-urlencoded";
+ axios.defaults.baseURL = API_BASE_URL;
+ // axios.defaults.headers.common["Authorization"] = "Bearer undefined";
+ // axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+ axios.defaults.headers.common["Origin"] = "http://localhost:3001";
+ http: axios.defaults.headers.common["Accept"] = "*
+ /*";
+ axios.defaults.headers.common["Connection"] = "keep-alive";
+ axios.defaults.headers.common["Content-Type"] =
+ "application/json; charset=utf-8";
+ axios.defaults.headers.common["Cache-Control"] =
+ "max-age=0, private, must-revalidate";
+ // axios.defaults.headers.common["Access-Control-Request-Headers"] = "X-Custom-Header-project; X-Requested-With; etc...";
+ // axios.defaults.headers.common["X-Requested-With"] = "this app";
+ // axios.defaults.headers.common["X-Custom-Header-project"] = "this proj";
+ // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+ // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+ // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+ // axios.defaults.headers.post["Content-Type"] =   "application/x-www-form-urlencoded";
 
-*******************************************************/
+ *******************************************************/
 
-/** 
+/**
  * curl -H "Origin: http://example.com" \
-  -H "Access-Control-Request-Method: POST" \
-  -H "Access-Control-Request-Headers: X-Requested-With" \
-  -X OPTIONS --verbose \
-  https://www.googleapis.com/discovery/v1/apis?fields=
+ -H "Access-Control-Request-Method: POST" \
+ -H "Access-Control-Request-Headers: X-Requested-With" \
+ -X OPTIONS --verbose \
+ https://www.googleapis.com/discovery/v1/apis?fields=
 
- * 
-*/
+ *
+ */
 
-/********* 
-const axiosInstance = axios.create({
+/*********
+ const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 5000,
   // headers: { "X-Custom-Header-project": "project8" },
 });
-************/
+ ************/
 
 ////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 /***********************************************************
-const API_HOST = "http://127.0.0.1";
-const API_PORT = "3001";
-const API_SIGNUP_ROUTE = "/authn";
-const API_SIGNUP_METHOD = "POST";
-const API_SIGNIN_ROUTE = "/authn/sign_in";
-const API_SIGNIN_METHOD = "POST";
-const API_SIGNOUT_ROUTE = "/authn/sign_out";
-const API_SIGNOUT_METHOD = "DELETE";
+ const API_HOST = "http://127.0.0.1";
+ const API_PORT = "3001";
+ const API_SIGNUP_ROUTE = "/authn";
+ const API_SIGNUP_METHOD = "POST";
+ const API_SIGNIN_ROUTE = "/authn/sign_in";
+ const API_SIGNIN_METHOD = "POST";
+ const API_SIGNOUT_ROUTE = "/authn/sign_out";
+ const API_SIGNOUT_METHOD = "DELETE";
 
-const axiosInstance = axios.create({
+ const axiosInstance = axios.create({
   baseURL: `${API_HOST}:${API_PORT}`,
   timeout: 5000,
   // headers: { "X-Custom-Header-project": "project8" },
 });
 
-const getDataForUserId = async (
-  apiRoute,
-  params,
-  { accessToken, 
+ const getDataForUserId = async (
+ apiRoute,
+ params,
+ { accessToken,
     // tokenType, 
     client, expiry, uid, id }
-) => {
+ ) => {
   // NOTE: must retrieve and return the uid, authentication-token and the client for use for the next request
 
   return axiosInstance
@@ -1313,7 +1311,7 @@ const getDataForUserId = async (
     });
 };
 
-export { getDataForUserId };
+ export { getDataForUserId };
 
  */
 

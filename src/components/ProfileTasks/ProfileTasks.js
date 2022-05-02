@@ -1,49 +1,45 @@
 // ProfileTasks
-import { useContext } from 'react';
+import {useContext} from 'react';
 import './ProfileTasks.css';
-import Task from '../Task';
 import TaskAction from '../TaskAction/TaskAction';
-import { Link } from 'react-router-dom';
-import { Notification, TasksContext } from '../../AppPrelude';
-import UserProfileContext from '../../services/UserProfileContext';
-import UserAuthnContext from '../../services/UserAuthnContext';
+import {Notification, TasksContext} from '../../AppPrelude';
 
 export default function ProfileTasks({
-  // taskListType,
-  // selectedTask,
-  ...restOfProps
-}) {
-  const { openTasks, profileTasks } = useContext(TasksContext);
-  const taskList = profileTasks.size ? Array.from(profileTasks.values()) : null;
+                                         // taskListType,
+                                         // selectedTask,
+                                         ...restOfProps
+                                     }) {
+    const {openTasks, profileTasks} = useContext(TasksContext);
+    const taskList = profileTasks.size ? Array.from(profileTasks.values()) : null;
 
-  if (taskList) {
-    const listItems = taskList?.map((task) => (
-      <div className='block' key={task.id}>
-        <li>
-          <TaskAction task={task} />
-        </li>
-      </div>
-    ));
+    if (taskList) {
+        const listItems = taskList?.map((task) => (
+            <div className='block' key={task.id}>
+                <li>
+                    <TaskAction task={task}/>
+                </li>
+            </div>
+        ));
 
-    return (
-      <>
-        <h1>There are {taskList.length} requests</h1>
+        return (
+            <>
+                <h1>There are {taskList.length} requests</h1>
 
-        <div className='box tasklist'>
-          <ul>{listItems}</ul>
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <div className='box tasklist'>
-        <Notification
-          type='Information'
-          message='No profile Tasks to Display'
-        />
-      </div>
-    );
-  }
+                <div className='box tasklist'>
+                    <ul>{listItems}</ul>
+                </div>
+            </>
+        );
+    } else {
+        return (
+            <div className='box tasklist'>
+                <Notification
+                    type='Information'
+                    message='No profile Tasks to Display'
+                />
+            </div>
+        );
+    }
 }
 
 // active_conversations: 0

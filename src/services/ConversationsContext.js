@@ -1,12 +1,5 @@
 //
-import React, {
-  useState,
-  useEffect,
-  Context,
-  createContext,
-  useContext,
-} from 'react';
-import { ConversationsServices } from './ConversationsServices';
+import React, {createContext,} from 'react';
 
 // Conversations Context
 
