@@ -10,27 +10,12 @@ export const uploadGovId = (file, setGovIdFunc) => {
             setGovIdFunc(''); // empty govId indicates error, updateUserProfile should block on empty "" govId
         } else {
             console.log('##DIRECT UPLOAD NO ERROR: ', blob);
-            // debugger;
-            // setGovIdFunc(blob.signed_id);
+
             setGovIdFunc(blob.service_url.toString()); //or .service_url for direct image access?
         }
     });
 };
 
-// export const uploadGovId = (file, setGovIdFunc) => {
-//   const upload = new DirectUpload(file, API_ACTIVESTORAGE_DIRECTUPLOAD_ROUTE);
-//   upload.create((error, blob) => {
-//     if (error) {
-//       console.log('##DIRECT UPLOAD ERROR: ', error);
-//       setGovIdFunc(''); // empty govId indicates error, updateUserProfile should block on empty "" govId
-//     } else {
-//       console.log('##DIRECT UPLOAD NO ERROR: ', blob);
-//       // debugger;
-//       // setGovIdFunc(blob.signed_id);
-//       setGovIdFunc(blob.service_url.toString()); //or .service_url for direct image access?
-//     }
-//   });
-// };
 
 ////////////////// Blob's shape
 /**

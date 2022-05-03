@@ -49,12 +49,7 @@ const fetchConversations = async (
 
         headers: reqAuthnToHeaders(authn),
         timeout: CONVERSATIONS_API_TIMEOUT,
-        // params: {
-        //   user_id: userId,
-        //   lat: lat,
-        //   lng: lng,
-        //   radius: radius,
-        // },
+
     };
 
     return axios(reqConfig);
@@ -64,9 +59,7 @@ const fetchConversations = async (
 const fetchAConversation = async (
     authn, //{ accessToken, client, expiry, uid, id },
     convId
-    // updateAuthnFunc,
-    // updateDataFunc,
-    // updateCountfunc
+
 ) => {
     const reqConfig = {
         url: `${API_CONVERSATIONS_ROUTE}/${parseInt(convId)}`,
@@ -74,12 +67,7 @@ const fetchAConversation = async (
 
         headers: reqAuthnToHeaders(authn),
         timeout: CONVERSATIONS_API_TIMEOUT,
-        // params: {
-        //   user_id: userId,
-        //   lat: lat,
-        //   lng: lng,
-        //   radius: radius,
-        // },
+
     };
 
     return axios(reqConfig);
@@ -89,9 +77,7 @@ const fetchAConversation = async (
 const fetchAConversationByTaskId = async (
     authn, //{ accessToken, client, expiry, uid, id },
     taskId
-    // updateAuthnFunc,
-    // updateDataFunc,
-    // updateCountfunc
+
 ) => {
     const reqConfig = {
         url: `${API_TASKS_ROUTE}/${parseInt(taskId)}/conversation`,
@@ -99,12 +85,7 @@ const fetchAConversationByTaskId = async (
 
         headers: reqAuthnToHeaders(authn),
         timeout: CONVERSATIONS_API_TIMEOUT,
-        // params: {
-        //   user_id: userId,
-        //   lat: lat,
-        //   lng: lng,
-        //   radius: radius,
-        // },
+
     };
 
     return axios(reqConfig);
@@ -113,25 +94,13 @@ const fetchAConversationByTaskId = async (
 /////// New
 // Create a conversation between volunteer userAuthn.id and taskid.user_id regarding taskid
 const createActiveConversation = async (authn, taskid) => {
-    // console.log('### CREATECONVERSATTION BEFORE AXIOS AUTHN and DATA: ', authn);
 
     const requestConfig = {
         url: API_CONVERSATIONS_ROUTE,
         method: 'post',
 
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   task_id: taskid.toString(),
-        //   // user_id: authn.id.toString(),
-        //   is_active: true,
-        // },
+
         data: {
             task_id: parseInt(taskid),
             // user_id: authn.id.toString(),
@@ -146,25 +115,13 @@ const createActiveConversation = async (authn, taskid) => {
 ///// END New createConversation
 
 /////// New
-// test creating an conversation between volunteer userAuthn.id and taskid.user_id regarding taskid
+// test creating a conversation between volunteer userAuthn.id and taskid.user_id regarding taskid
 const createInactiveConversation = async (authn, taskid) => {
     const requestConfig = {
         url: API_CONVERSATIONS_ROUTE,
         method: 'post',
 
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   task_id: taskid.toString(),
-        //   // user_id: authn.id.toString(),
-        //   is_active: true,
-        // },
         data: {
             task_id: parseInt(taskid),
             // user_id: authn.id.toString(),
@@ -188,18 +145,6 @@ const updateAConversation = async (authn, convId, taskId, isActive) => {
         method: 'put',
 
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   task_id: taskid.toString(),
-        //   // user_id: authn.id.toString(),
-        //   is_active: true,
-        // },
         data: {
             task_id: parseInt(taskId),
             // user_id: authn.id.toString(),
@@ -216,25 +161,13 @@ const updateAConversation = async (authn, convId, taskId, isActive) => {
 ///////
 // leave a conversation between volunteer userAuthn.id and taskid.user_id regarding taskid by switch is_active true/false
 const leaveAConversation = async (authn, convId) => {
-    // console.log('### CREATECONVERSATTION BEFORE AXIOS AUTHN and DATA: ', authn);
 
     const requestConfig = {
         url: `${API_CONVERSATIONS_ROUTE}/${parseInt(convId)}`,
         method: 'patch',
 
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   task_id: taskid.toString(),
-        //   // user_id: authn.id.toString(),
-        //   is_active: true,
-        // },
+
         data: {
             // task_id: parseInt(taskId),
             // user_id: authn.id.toString(),
@@ -256,23 +189,6 @@ const deleteAConversation = async (authn, convId) => {
         method: 'delete',
 
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   task_id: taskid.toString(),
-        //   // user_id: authn.id.toString(),
-        //   is_active: true,
-        // },
-        // data: {
-        //   task_id: parseInt(taskid),
-        //   // user_id: authn.id.toString(),
-        //   is_active: isActive,
-        // },
 
         timeout: CONVERSATIONS_API_TIMEOUT,
     };
@@ -291,23 +207,12 @@ const fetchMessagesByConversationId = async (
     // updateAuthnFunc,
     // updateDataFunc
 ) => {
-    // console.log(
-    //   '### ConversationServices fetchMessages BEFORE AXIOS AUTHN and DATA: conversationId= ',
-    //   conversationId,
-    //   authn
-    // );
 
     const requestConfig = {
         url: API_MESSAGES_ROUTE,
         method: 'get',
         headers: reqAuthnToHeaders(authn),
         timeout: CONVERSATIONS_API_TIMEOUT,
-        // params: {
-        //   // id: id,
-        //   conversation_id: parseInt(conversationId), //.toString(),
-        //   // user_id: authn.id.toString(),
-        //   // text: text,
-        // },
         params: {
             conversation_id: conversationId,
             // user_id: authn.id.toString(),
@@ -331,28 +236,10 @@ const createMessage = async (
     // updateAuthnFunc,
     // updateDataFunc
 ) => {
-    // console.log(
-    //   '### ConversationServices fetchMessages BEFORE AXIOS AUTHN and DATA: conversationId= ',
-    //   conversationId,
-    //   authn
-    // );
-
     const requestConfig = {
         url: API_MESSAGES_ROUTE,
         method: 'post',
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   conversation_id: parseInt(conversationId),
-        //   // user_id: authn.id.toString(),
-        //   text: text,
-        // },
         data: {
             // id: id,
             conversation_id: parseInt(conversationId),
@@ -373,28 +260,10 @@ const updateMessageAsDeleted = async (
     // updateAuthnFunc,
     // updateDataFunc
 ) => {
-    // console.log(
-    //   '### ConversationServices updateMessageAsDeleted BEFORE AXIOS AUTHN and DATA: conversationId= ',
-    //   conversationId,
-    //   authn
-    // );
-
     const requestConfig = {
         url: API_MESSAGES_ROUTE,
         method: 'put',
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   conversation_id: parseInt(conversationId),
-        //   // user_id: authn.id.toString(),
-        //   text: text,
-        // },
         data: {
             // id: id,
             conversation_id: parseInt(conversationId),
@@ -417,28 +286,10 @@ const deleteMessage = async (
     // updateAuthnFunc,
     // updateDataFunc
 ) => {
-    // console.log(
-    //   '### ConversationServices deleteMessages BEFORE AXIOS AUTHN and DATA: conversationId= ',
-    //   conversationId,
-    //   authn
-    // );
-
     const requestConfig = {
         url: API_MESSAGES_ROUTE,
         method: 'delete',
         headers: reqAuthnToHeaders(authn),
-        // params: {
-        //   id: id,
-        //   lat: coords.lat,
-        //   lng: coords.lng,
-        //   radius: radius,
-        // },
-        // params: {
-        //   // id: id,
-        //   conversation_id: parseInt(conversationId),
-        //   // user_id: authn.id.toString(),
-        //   text: text,
-        // },
         data: {
             // id: id,
             conversation_id: parseInt(conversationId),
@@ -461,7 +312,6 @@ export {
     updateAConversation,
     leaveAConversation,
     deleteAConversation,
-    // fetchMessages,
     fetchMessagesByConversationId,
     fetchAConversationByTaskId,
     createMessage,

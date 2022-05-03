@@ -36,17 +36,8 @@ const config = {
     // timeout: 5000,
     // headers: { "X-Custom-Header-project": "project8" },
     headers: {
-        // "access-token": authn.accessToken,
-        // client: authn.client,
-        // expiry: authn.expiry,
-        // uid: authn.uid,
-        // "Content-Type": "application/json;charset=UTF-8",
         'Access-Control-Allow-Origin': '*',
-        // "User-Agent": "PostmanRuntime/7.26.8",
         'Accept': '*/*',
-        // "Postman-Token": "e738542b-0d9b-4edd-88a3-32a0ee0ae12d",
-        // Host: "127.0.0.1:3001",
-        // "Accept-Encoding": "gzip, deflate, br",
         'Connection': 'keep-alive',
         'X-Frame-Options': 'SAMEORIGIN',
         'X-XSS-Protection': '1; mode=block',
@@ -55,17 +46,8 @@ const config = {
         'X-Permitted-Cross-Domain-Policies': 'none',
         'Referrer-Policy': 'strict-origin-when-cross-origin',
         'Content-Type': 'application/json; charset=utf-8',
-        // "access-token": "do4e6kh2Rf14xsJLVH9Qjw",
-        // "token-type": "Bearer",
-        // client: "Odt4HBsX6p81oxho55uuyQ",
-        // expiry: 1623197681,
-        // uid: "user50@m50.co",
-        // ETag: 'W/"4f01a291e55e6acbd25331dc315cd52d"',
         'Cache-Control': 'max-age=0, private, must-revalidate',
-        // "X-Request-Id": "6d81da9d-dae6-445f-979f-8d7f55578480",
-        // "X-Runtime": 0.337923,
-        // Vary: "Origin",
-        // "Transfer-Encoding": "chunked",
+
     },
     timeout: 3000,
 };
@@ -167,14 +149,7 @@ const signOut = async (authn) => {
             // },
         })
         .then(function (res) {
-            // console.log(
-            //   'AUTHN SIGNOUT: ',
-            //   res.data,
-            //   res.status,
-            //   res.statusText,
-            //   res.headers,
-            //   res.request
-            // );
+
             return {response: res};
         })
         .catch(function (err) {
@@ -222,42 +197,11 @@ const updateUserProfile = async (
     };
 
     return axios(reqConfig);
-    // .then(function (res) {
-    //   console.log(
-    //     "##### AUTHNSERVICES UPDATE USER PROFILE response data: ",
-    //     res.data,
-    //     res.status,
-    //     res.statusText,
-    //     res.headers,
-    //     res.request
-    //   );
-    //   return {
-    //     resUserProfile: {
-    //       address: res.data.data.address,
-    //       allowPasswordChange: res.data.data.allow_password_change,
-    //       avatar: res.data.data.avatar,
-    //       email: res.data.data.email,
-    //       firstName: res.data.data.first_name,
-    //       govId: res.data.data.gov_id,
-    //       id: res.data.data.id,
-    //       lastLoggedIn: res.data.data.last_loggedin,
-    //       lastName: res.data.data.last_name,
-    //       preferredName: res.data.data.preferred_name,
-    //       provider: res.data.data.provider,
-    //       uid: res.data.data.uid,
-    //     },
-    //     // authnCredentials: res.headers,
-    //     resAuthnCredentials: deviseAuthnResRefresh(authn, res),
-    //   };
-    // })
-    // .catch(function (err) {
-    //   console.log("##### AUTHNSERVICES UPDATE USER PROFILE ERR: ", err);
-    //   return { error: err };
-    // });
+
 };
 
 ////////////////////////////////////
-//
+// deleteUserProfile
 /////////////////////////////////
 const deleteUserProfile = async (authn) => {
     // {uid, accessToken, client}
@@ -270,14 +214,7 @@ const deleteUserProfile = async (authn) => {
             },
         })
         .then(function (res) {
-            // console.log(
-            //   'Authn DELETE USER: ',
-            //   res.data,
-            //   res.status,
-            //   res.statusText,
-            //   res.headers,
-            //   res.request
-            // );
+
             return {
                 response: res,
             };
@@ -289,7 +226,7 @@ const deleteUserProfile = async (authn) => {
 };
 
 /////////////////////////////////
-///
+/// updateUserPassword
 ///////////////////////////////
 const updateUserPassword = async (authn, password, passwordConfirmation) => {
     const reqConfig = {
@@ -306,34 +243,6 @@ const updateUserPassword = async (authn, password, passwordConfirmation) => {
 
     return axios(reqConfig);
 
-    // return axiosInstance
-    //   .post(API_SIGNUP_ROUTE, {
-    //     'email': email,
-    //     'first-name': firstName,
-    //     'last-name': lastName,
-    //     'preferred-name': preferredName,
-    //     'gov_id': govId,
-    //     'password': password,
-    //     'password-confirmation': passwordConfirmation,
-    //   })
-    //   .then(function (res) {
-    //     console.log(
-    //       'AUTHN UPDATE USER PASSWORD: ',
-    //       res.data,
-    //       res.status,
-    //       res.statusText,
-    //       res.headers,
-    //       res.request
-    //     );
-    //     return {
-    //       userProfile: res.data,
-    //       authnCredentials: res.headers,
-    //     };
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //     return { error: err };
-    //   });
 };
 
 export {

@@ -76,23 +76,14 @@ export default function App({
             mapCoords?.lat ?? userCoords.lat,
             mapCoords?.lng ?? userCoords.lng,
             userRadius,
-            // tasks.size == 0 ? 0 : tasksLastUpdateTimeTracker
             tasksLastUpdateTimeTracker - 2 * TASKS_PERIODICUPDATE_INTERVAL
         )
             .then((res) => {
-                // console.log(
-                //   'DEBUGDEBUG fetchTasks APP for opentasks res.data: ',
-                //   res.data
-                // );
                 setUserAuthn((previoususerAuthn) => {
                     return deviseAuthnFromRes(previoususerAuthn, res);
                 });
 
                 if (res.data.created.length > 0 || res.data.updated.length > 0) {
-                    // console.log(
-                    //   'DEBUGDEBUG fetchTasks about to enter setTasks updateTaskStoreFrom <APP> for opentasks res.data: ',
-                    //   res.data
-                    // );
 
                     setTasks((prevData) => {
                         return updateTaskStoreFrom(
@@ -112,16 +103,6 @@ export default function App({
                     headers: null,
                     data: err.message,
                 };
-                // console.log(
-                //   'DEBUG CATCH FOR fetchTasks APP for opentasks: ',
-                //   errRes?.headers,
-                //   errRes?.data?.status,
-                //   errRes?.data?.errors,
-                //   '################ err JSON STRINGIFIED BEGIN#########',
-                //   JSON.stringify(err),
-                //   '################ errJSON STRINGIFIED END #########'
-                // );
-                // debugger;
                 setUserAuthn((previoususerAuthn) =>
                     deviseAuthnFromErr(previoususerAuthn, err)
                 );
@@ -148,18 +129,9 @@ export default function App({
         let isMounted = true;
 
         if (isMounted) {
-            // setstatus({
-            //   status: STATUS_WAITING,
-            //   message: 'Loading requests...',
-            // });
 
             fetchProfileTasks(userAuthn) //, userProfile.id, null, null, null, null)
                 .then((res) => {
-                    // console.log(
-                    //   'fetchProfileTasks APP for profiletasks res.data: ',
-                    //   res.data
-                    // );
-
                     setUserAuthn((previoususerAuthn) =>
                         deviseAuthnFromRes(previoususerAuthn, res)
                     );
@@ -168,20 +140,7 @@ export default function App({
                     );
                 })
                 .catch((err) => {
-                    // const errRes = err.response ?? {
-                    //   headers: null,
-                    //   data: err.message,
-                    // };
-                    // console.log(
-                    //   'DEBUG UpdateUserProfile: ',
-                    //   errRes?.headers,
-                    //   errRes?.data?.status,
-                    //   errRes?.data?.errors,
-                    //   '################ errRes JSON STRINGIFIED BEGIN#########',
-                    //   JSON.stringify(errRes),
-                    //   '################ errRes JSON STRINGIFIED END #########',
-                    // );
-                    // setUserAuthn(deviseAuthnFromErr(userAuthn, err));
+
                     setstatus(() => {
                         return {
                             type: STATUS_ERROR,
@@ -240,10 +199,7 @@ export default function App({
 
             setCoords(() => mapCoords);
             setTasksLastUpdateTimeTracker((previous) => {
-                // console.log(
-                //   'DEBUGDEBUG FROM INSIDE setTasksTracker mapcoords out of radius, previous value: ',
-                //   previous
-                // );
+
                 return 0;
             });
         }
@@ -269,11 +225,6 @@ export default function App({
         setCoords(() => userCoords);
         setTasks(() => new Map()); //NOTE: experiemnt comment out to remove the flicker and accidental reload
         setTasksLastUpdateTimeTracker(() => 0);
-
-        //  if (mapCoords && getDistanceFromLatLngInm(mapCoords, userCoords) >= userRadius) {
-        //    setCoords(mapCoords);
-        //    setTasksLastUpdateTimeTracker(0);
-        //  }
 
         return () => {
             // isMounted=false;
@@ -344,12 +295,7 @@ export default function App({
                         headers: 'DEBUG REQ NOT SENT: WRONG APP REQUEST FORMAT',
                         data: err.message,
                     };
-                    // console.log(
-                    //   'DEBUG ### fetchConversations  in APP ERROR: ',
-                    //   errRes.headers,
-                    //   errRes.data,
-                    //   JSON.stringify(errRes)
-                    // );
+
                     setUserAuthn((previoususerAuthn) =>
                         deviseAuthnFromErr(previoususerAuthn, errRes)
                     );
@@ -376,75 +322,11 @@ export default function App({
     ///  task stats
     ////////////////////////////////
     const [taskStats, setTaskStats] = useState(null);
-    // useState({
-    //   stats: {
-    //     current_time_stamp: 0,
-    //     current_time: 0,
-    //     total_task_count: 0,
-    //     open_task_count0: 2742,
-    //     closed_task_count: 0,
-    //     unfullfilled_task_count: 0,
-    //     fullfilled_task_count: 0,
-    //     unpublished_task_count: 0,
-    //     published_task_count: 0,
-    //     total_profile_task_count: 0,
-    //     open_profile_task_count: 0,
-    //     last_created_task: {
-    //       id: null,
-    //       title: null,
-    //       description: null,
-    //       kind: null,
-    //       is_published: null,
-    //       is_fullfilled: null,
-    //       lat: null,
-    //       lng: null,
-    //       user_id: null,
-    //       created_at: null,
-    //       updated_at: null,
-    //       unpublished_at: null,
-    //       republishable_start_time: null,
-    //       is_fullfilling: null,
-    //       is_republishable: null,
-    //       distance: null,
-    //       is_within_radius: null,
-    //       active_conversations: null,
-    //       inactive_conversations: null,
-    //       authz_volunteer_ids: [],
-    //       active_conversation_ids: [0],
-    //     },
-    //     last_updated_task: {
-    //       id: null,
-    //       title: null,
-    //       description: null,
-    //       kind: null,
-    //       is_published: null,
-    //       is_fullfilled: null,
-    //       lat: null,
-    //       lng: null,
-    //       user_id: null,
-    //       created_at: null,
-    //       updated_at: null,
-    //       unpublished_at: null,
-    //       republishable_start_time: null,
-    //       is_fullfilling: null,
-    //       is_republishable: null,
-    //       distance: null,
-    //       is_within_radius: null,
-    //       active_conversations: null,
-    //       inactive_conversations: null,
-    //       authz_volunteer_ids: [],
-    //       active_conversation_ids: [0],
-    //     },
-    //   },
-    // });
 
     useEffect(() => {
         fetchTaskStats(userAuthn)
             .then((res) => {
-                // console.log(
-                //   'DEBUGDEBUG fetchTaskStats APP for opentasks res.data: ',
-                //   res.data
-                // );
+
                 setUserAuthn((previoususerAuthn) => {
                     return deviseAuthnFromRes(previoususerAuthn, res);
                 });
@@ -459,16 +341,7 @@ export default function App({
                     headers: null,
                     data: err.message,
                 };
-                // console.log(
-                //   'DEBUG CATCH FOR fetchTaskStats APP  : ',
-                //   errRes?.headers,
-                //   errRes?.data?.status,
-                //   errRes?.data?.errors,
-                //   '################ err JSON STRINGIFIED BEGIN#########',
-                //   JSON.stringify(err),
-                //   '################ errJSON STRINGIFIED END #########'
-                // );
-                // debugger;
+
                 setUserAuthn((previoususerAuthn) =>
                     deviseAuthnFromErr(previoususerAuthn, err)
                 );
@@ -507,22 +380,15 @@ export default function App({
 
     useEffect(() => {
         const periodicTaskTracker = setInterval(() => {
-            // fetchAppStats().then(res=> {
-
-            // }).catch(err=>console.log("FETCH TASK STATS ERROR: ", err));
 
             setTasksLastUpdateTimeTracker(() => Date.now());
             setProfileTasksLastUpdateTimeTracker(() => Date.now());
-            // setConversationsTracker(Date.now());
+
         }, TASKS_PERIODICUPDATE_INTERVAL);
 
         const periodicConversationTracker = setInterval(() => {
-            // fetchAppStats().then(res=> {
-
-            // }).catch(err=>console.log("FETCH TASK STATS ERROR: ", err));
 
             setConversationsTracker(() => Date.now());
-            // setConversationsTracker(Date.now());
         }, CONVERSATIONS_PERIODICUPDATE_INTERVAL);
 
         return () => {
@@ -537,7 +403,7 @@ export default function App({
     const [visibleComponents, setVisibleComponents] = useState('TASKMAP');
 
     ////////////////////////////////////////
-    // Memoization to limit fliker when updating tasks
+    // Memoization to limit flicker when updating tasks
     //////////////////////////////////////
 
     // const app = useMemo(() => {
@@ -559,7 +425,6 @@ export default function App({
                 mapCoords: mapCoords,
                 coords: coords,
                 userRadius: userRadius,
-                // setOutOfRadiusTracker: setOutOfRadiusTracker,
                 setDeviceCoords: setDeviceCoords,
                 setUserCoords: setUserCoords,
                 setMapCoords: setMapCoords,
@@ -584,12 +449,7 @@ export default function App({
                         <Notification type={status.type} message={status.content}/>
                     ) : (
                         <InfoBar
-                            // className='is-tablet'
-                            // errors={status}
-                            // taskCount={tasks?.length}
-                            // profileTaskCount={profileTasks?.length}
-                            // conversationCount={conversations?.length}
-                            // tasksUpdateTracker={tasksLastUpdateTimeTracker}
+
                         />
                     )}
                     <Switch>
@@ -633,8 +493,7 @@ export default function App({
                             <div className='columns is-centered is-gapless'>
                                 <div className='column  is-three-quarters'>
                                     <ProfileTasks
-                                        // taskListType={'profileTasks'}
-                                        // selectedTask={null}
+
                                     />
                                 </div>
                             </div>
@@ -650,7 +509,6 @@ export default function App({
                                         userAuthn={userAuthn}
                                         setUserAuthn={setUserAuthn}
                                         userProfile={userProfile}
-                                        // coords={coords}
                                         userCoords={userCoords}
                                         mapCoords={mapCoords}
                                         tasks={profileTasks}

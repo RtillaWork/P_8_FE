@@ -69,9 +69,7 @@ export default function Main() {
     });
 
     if (isAuthnObjectInvalid(userAuthn)) {
-        /*
-        setUserAuthn= { setUserAuthn };
-        setUserProfile = { setUserProfile }; */
+
         return (
             <div className='box'>
                 <UserProfileContext.Provider
@@ -90,10 +88,6 @@ export default function Main() {
             </div>
         );
     } else if (isUserProfileObjectIncomplete(userProfile)) {
-        // console.log(
-        //   '### <MAIN> isUserProfileObjectIncomplete(userAuthn)',
-        //   userAuthn
-        // );
 
         return (
             <div className='box'>
@@ -123,11 +117,6 @@ export default function Main() {
                 </div>
             );
         } else {
-            // console.log(
-            //   '### FROM <MAIN> UserAuthn VALUE BEFORE <APP> renders: ',
-            //   userAuthn,
-            //   userProfile
-            // );
             return (
                 <div className='box'>
                     <UserProfileContext.Provider

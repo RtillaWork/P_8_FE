@@ -3,10 +3,9 @@ import axios from 'axios';
 import {STATUS_ERROR, STATUS_READY, STATUS_WAITING} from './appServices';
 
 // BEGIN EXPORT CONSTANTS RELATED TO API and REQ/RES SYMBOLS
-// export const API_SYMBOLS = {
+// export const API_SYMBOLS
 export const ONETIMETASK = 'OTT'; // 'one_time_task';
 export const MATERIALNEED = 'MN'; // 'material_need';
-// };
 export const MAX_API_TIMEOUT = 0; // seconds
 export const MAX_RENDER_TIMEOUT = 3000; // seconds
 export const MAX_UI_TIMEOUT = MAX_API_TIMEOUT + MAX_RENDER_TIMEOUT;
@@ -332,14 +331,6 @@ const userProfileFromHttpRes = (res) => {
             lng: null,
         };
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-    //   res.data,
-    //   res.status,
-    //   res.statusText,
-    //   res.headers
-    //   // res.request
-    // );
     if (res.status == 200) {
         userProfile = {
             address: res.data.data.address,
@@ -360,12 +351,6 @@ const userProfileFromHttpRes = (res) => {
         };
     }
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE RETURN OBJECT: {userProfile, ...}',
-    //   { userProfile: userProfile, status: res.status }
-    // );
-
-    // return { userProfile: userProfile, status: res.status };
     return userProfile;
 };
 
@@ -376,18 +361,6 @@ const statusFromHttpResOrErr = (resOrErr) => {
     /** res.data.data, */
     let status = STATUS_WAITING;
     let message = 'UNDETERMINATE';
-
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-    //   resOrErr ??
-    //     'resOrErr: Response Or Error is null. Possibly XHR Query or Network Error',
-    //   resOrErr?.data,
-    //   resOrErr?.status,
-    //   resOrErr?.statusText,
-    //   resOrErr?.headers,
-    //   resOrErr?.response ?? 'OK NO ERR RESPONSE'
-    //   // res.request
-    // );
 
     // if resOrErr is an error with the shape
     // {response:
@@ -404,17 +377,7 @@ const statusFromHttpResOrErr = (resOrErr) => {
     }
     // else regular response
     else {
-        // console.log(
-        //   'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
-        //   resOrErr ??
-        //     'resOrErr: Response Or Error is null. Possibly XHR Query or Network Error',
-        //   resOrErr?.data,
-        //   resOrErr?.status,
-        //   resOrErr?.statusText,
-        //   resOrErr?.headers,
-        //   resOrErr?.response ?? 'OK NO ERR RESPONSE'
-        //   // res.request
-        // );
+
         if (resOrErr?.status >= 100 && resOrErr?.status < 300) {
             status = STATUS_READY;
             message = [
@@ -456,13 +419,6 @@ const statusFromHttpResOrErr = (resOrErr) => {
         ];
     }
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
-    //   status,
-    //   message
-    // );
-
-    // return { userProfile: userProfile, status: res.status };
     return {status: status, message: JSON.stringify(message)};
 };
 
@@ -474,17 +430,6 @@ const statusFromHttpRes = (res) => {
     let status = STATUS_WAITING;
     let message = 'RES SUCCESS';
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-    //   res ??
-    //     'res: Response Or Error is null. Possibly XHR Query or Network Error',
-    //   res?.data,
-    //   res?.status,
-    //   res?.statusText,
-    //   res?.headers,
-    //   res?.response ?? 'OK NO ERR RESPONSE'
-    //   // res.request
-    // );
 
     // if err is an error with the shape
     // {response:
@@ -501,17 +446,7 @@ const statusFromHttpRes = (res) => {
     }
     // else regular response
     else {
-        // console.log(
-        //   'DEBUG ##### APISERVICES # ## ## NO ERRORS USER PROFILE response data userProfileFromHttpRes: ',
-        //   res ??
-        //     'res: Response Or Error is null. Possibly XHR Query or Network Error',
-        //   res?.data,
-        //   res?.status,
-        //   res?.statusText,
-        //   res?.headers,
-        //   res?.response ?? 'OK NO ERR RESPONSE'
-        //   // res.request
-        // );
+
         if (res?.status >= 100 && res?.status < 300) {
             status = STATUS_READY;
             message = [
@@ -549,13 +484,6 @@ const statusFromHttpRes = (res) => {
         ];
     }
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
-    //   status,
-    //   message
-    // );
-
-    // return { userProfile: userProfile, status: res.status };
     return {status: status, message: JSON.stringify(message)};
 };
 
@@ -576,17 +504,6 @@ const statusFromHttpErr = (err) => {
         body = {...body, ...err?.response.data.errors};
     }
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## USER PROFILE response data userProfileFromHttpRes: ',
-    //   err ??
-    //     'err: Response Or Error is null. Possibly XHR Query or Network Error',
-    //   err?.data,
-    //   err?.status,
-    //   err?.statusText,
-    //   err?.headers,
-    //   err?.response ?? 'OK NO ERR RESPONSE'
-    //   // res.request
-    // );
 
     // if err is an error with the shape
     // {response:
@@ -651,13 +568,7 @@ const statusFromHttpErr = (err) => {
     //   ];
     // }
 
-    // console.log(
-    //   'DEBUG ##### APISERVICES # ## ## statusFromHttpRes',
-    //   status,
-    //   message
-    // );
 
-    // return { userProfile: userProfile, status: res.status };
     return {status: status, body: body};
 };
 
@@ -689,17 +600,6 @@ const deviseAuthnResRefresh = (previousAuthn, res) => {
         return previousAuthn;
     }
     // END CASE OF  OF catch with err with the shape err: {response: {headers:, data:,...}}...
-
-    // console.log(
-    //   'DEBUG ### deviceTokenAuthRefresh HEADERs from THEN= HTTP HEADERS',
-    //   {
-    //     acessToken: res?.headers['access-token'],
-    //     tokenType: res?.headers['token-type'],
-    //     expiry: res?.headers['expiry'],
-    //     client: res?.headers['client'],
-    //     uid: res?.headers['uid'],
-    //   }
-    // );
 
     const responseAccessToken = res.headers['access-token'];
     const responseClient = res.headers['client']; // TODO check for security with this later
@@ -739,10 +639,6 @@ const deviseAuthnResRefresh = (previousAuthn, res) => {
             uid: refreshedUid, // previousAuthn.uid,
             // id: previousAuthn?.id,
         };
-        // console.log(
-        //   'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
-        //   refreshedAuthn
-        // );
 
         return refreshedAuthn;
     }
@@ -781,10 +677,6 @@ const deviseAuthnResRefresh = (previousAuthn, res) => {
         uid: responseUid, // previousAuthn.uid,
         // id: previousAuthn?.id,
     };
-    // console.log(
-    //   'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? AUTHN =',
-    //   refreshedAuthn
-    // );
 
     return refreshedAuthn;
 };
@@ -807,14 +699,6 @@ const deviseAuthnFromRes = (previousAuthn, res) => {
     }
     // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
 
-    // console.log('DEBUG ### deviseAuthnFromRes HEADERs from THEN= HTTP HEADERS', {
-    //   acessToken: res?.headers['access-token'],
-    //   expiry: res?.headers['expiry'],
-    //   client: res?.headers['client'],
-    //   uid: res?.headers['uid'],
-    //   tokenType: res?.headers['token-type'],
-    // });
-
     const responseAuthn = {
         accessToken: res.headers['access-token'],
         client: res.headers['client'], // TODO check for security with this later
@@ -834,10 +718,6 @@ const deviseAuthnFromRes = (previousAuthn, res) => {
     // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
     // in this case skip refresh and return same previousAuthn
     if (responseAuthn.expiry < previousAuthn.expiry) {
-        // console.log(
-        //   'DEBUG ###### deviseAuthnFromRes CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
-        //   previousAuthn
-        // );
 
         return previousAuthn;
     }
@@ -863,11 +743,6 @@ const deviseAuthnFromRes = (previousAuthn, res) => {
     if (!refreshedAuthn.tokenType) {
         refreshedAuthn.tokenType = previousAuthn.tokenType ?? 'Bearer';
     }
-
-    // console.log(
-    //   'DEBUG ###### deviseAuthnFromRes CURRENT REFRESHED? updated between res and previous token AUTHN DID CHANGE =',
-    //   refreshedAuthn
-    // );
 
     return refreshedAuthn;
 };
@@ -895,14 +770,6 @@ const deviseAuthnFromErr = (previousAuthn, err) => {
 
     const res = err.response;
 
-    // console.log('DEBUG ### deviseAuthnFromErr HEADERs from THEN= HTTP HEADERS', {
-    //   acessToken: res?.headers['access-token'],
-    //   expiry: res?.headers['expiry'],
-    //   client: res?.headers['client'],
-    //   uid: res?.headers['uid'],
-    //   tokenType: res?.headers['token-type'],
-    // });
-
     const responseAuthn = {
         accessToken: res.headers['access-token'],
         client: res.headers['client'], // TODO check for security with this later
@@ -922,10 +789,6 @@ const deviseAuthnFromErr = (previousAuthn, err) => {
     // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
     // in this case skip refresh and return same previousAuthn
     if (responseAuthn.expiry < previousAuthn.expiry) {
-        // console.log(
-        //   'DEBUG ###### deviseAuthnFromErr CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
-        //   previousAuthn
-        // );
 
         return previousAuthn;
     }
@@ -952,174 +815,9 @@ const deviseAuthnFromErr = (previousAuthn, err) => {
         refreshedAuthn.tokenType = previousAuthn.tokenType ?? 'Bearer';
     }
 
-    // console.log(
-    //   'DEBUG ###### deviseAuthnFromErr CURRENT REFRESHED? updated between res and previous token AUTHN DID CHANGE =',
-    //   refreshedAuthn
-    // );
-
     return refreshedAuthn;
 };
 
-// //
-// // Returns refreshed device authn headers in case of change or undef or empty, otherwise keep the same
-// //
-// const deviseAuthnResRefresh = (previousAuthn, res) => {
-//   // CASE OF missing or broken res headers because of network or query setup error...
-//   // keep previousAuthnToken WARNING: initial Authn response missing user ID
-//   // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-//   // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
-//   if (
-//     res == null ||
-//     res == undefined
-//     // || res?.accessToken == '' ||
-//     // res?.accessToken == null ||
-//     // res?.accessToken == undefined ||
-//     // res?.client == '' ||
-//     // res?.client == null ||
-//     // res?.client == undefined ||
-//     // res?.expiry == '' ||
-//     // res?.expiry == null ||
-//     // res?.expiry == undefined ||
-//     // res?.uid == '' ||
-//     // res?.uid == null ||
-//     // res?.uid == undefined
-//   ) {
-//     console.log(
-//       'DEBUG ### deviceTokenAuthRefresh RESPONSE IS NULL OR UNDEFINED, HEADERs from THEN= HTTP HEADERS'
-//     );
-//     return previousAuthn;
-//   }
-//   // END CASE OF missing or broken res headers because of network or query setup error WARNING: NO ID
-
-//   // CASE OF catch with err with the shape err: {response: {headers:, data:,...}}...
-//   // devise sends here a valid token, ecept that res = res.response
-//   // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-//   // NOTE here previousAuthn Object is assumed to be valid as this is an app error recovery in case res is null
-//   if (res.response?.headers) {
-//     console.log(
-//       'DEBUG ### deviceTokenAuthRefresh RESPONSE exists OR with HEADERs from Catch err headers= HTTP HEADERS'
-//     );
-//     if (!res.response?.headers['uid'] || !res.response?.headers['expiry']) {
-//       return previousAuthn;
-//     } else {
-//       res = res.response;
-//     }
-//   }
-//   // END CASE OF  OF catch with err with the shape err: {response: {headers:, data:,...}}...
-
-//   console.log(
-//     'DEBUG ### deviceTokenAuthRefresh HEADERs from THEN= HTTP HEADERS',
-//     {
-//       acessToken: res?.headers['access-token'],
-//       tokenType: res?.headers['token-type'],
-//       expiry: res?.headers['expiry'],
-//       client: res?.headers['client'],
-//       uid: res?.headers['uid'],
-//     }
-//   );
-
-//   const responseAccessToken = res.headers['access-token'];
-//   const responseClient = res.headers['client']; // TODO check for security with this later
-//   const responseTokenType = res.headers['token-type'];
-//   const responseExpiry = res.headers['expiry'];
-//   const responseUid = res.headers['uid']; // TODO check with security with this later
-
-//   // CASE OF INITIAL AUTHn TOKEN; WARNING: initial Authn response missing user ID
-//   // TODO replace the if and test with isAuthnObjectInvalid(previousAuthn)
-//   // NOTE previousAuthn Object is always assumed to be valid except during first query/login/signup as null
-//   if (
-//     previousAuthn == null ||
-//     previousAuthn == undefined ||
-//     previousAuthn?.accessToken == '' ||
-//     previousAuthn?.accessToken == null ||
-//     previousAuthn?.accessToken == undefined ||
-//     previousAuthn?.client == '' ||
-//     previousAuthn?.client == null ||
-//     previousAuthn?.client == undefined ||
-//     previousAuthn?.expiry == '' ||
-//     previousAuthn?.expiry == null ||
-//     previousAuthn?.expiry == undefined ||
-//     previousAuthn?.uid == '' ||
-//     previousAuthn?.uid == null ||
-//     previousAuthn?.uid == undefined
-//   ) {
-//     return {
-//       accessToken: responseAccessToken,
-//       tokenType: responseTokenType,
-//       client: responseClient,
-//       expiry: responseExpiry,
-//       uid: responseUid,
-//       // id: "", NOTE: no id here, needs to be re-combined from userProfile.id
-//     };
-//   }
-//   // END CASE OF INITIAL AUTHn TOKEN; WARNING: NO ID
-
-//   // BEGIN CASE of out of order res object with responseExpiry < previousAuthn.expiry
-//   // in this case skip refresh and return same previousAuthn
-//   if (responseExpiry < previousAuthn.expiry) {
-//     let refreshedAccessToken = previousAuthn.accessToken;
-//     let refreshedClient = previousAuthn.client;
-//     let refreshedExpiry = previousAuthn.expiry;
-//     let refreshedTokenType = previousAuthn.tokenType;
-//     let refreshedUid = previousAuthn.uid;
-//     // authnCredentials
-//     const refreshedAuthn = {
-//       accessToken: refreshedAccessToken,
-//       tokenType: 'Bearer', // refreshedTokenType, // res.headers["token-type"], // Should always be "Bearer"
-//       client: refreshedClient, // previousAuthn.client, previousAuthn.client,
-//       expiry: refreshedExpiry,
-//       uid: refreshedUid, // previousAuthn.uid,
-//       // id: previousAuthn?.id,
-//     };
-//     console.log(
-//       'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? SKIPPED BECAUSE res.expiry<previous.expiry AUTHN DIDNT CHANGE =',
-//       refreshedAuthn
-//     );
-
-//     return refreshedAuthn;
-//   }
-//   // END CASE of out of order res object with responseExpiry < previousAuthn.expiry
-
-//   // BEGIN CASE of response exipiry more recent than previousAuthn.expiry
-//   // fill in empty response fields with valid data from previousAuthn, keep the rest
-//   let refreshedAccessToken = null;
-//   let refreshedClient = null;
-//   let refreshedExpiry = null;
-
-//   if (responseAccessToken != '' && responseAccessToken != undefined) {
-//     refreshedAccessToken = responseAccessToken;
-//   } else {
-//     refreshedAccessToken = previousAuthn.accessToken;
-//   }
-
-//   if (responseClient != '' && responseClient != undefined) {
-//     refreshedClient = responseClient;
-//   } else {
-//     refreshedClient = previousAuthn.client;
-//   }
-
-//   if (responseExpiry != '' && responseExpiry != undefined) {
-//     refreshedExpiry = responseExpiry;
-//   } else {
-//     refreshedExpiry = previousAuthn.expiry;
-//   }
-
-//   // authnCredentials
-//   const refreshedAuthn = {
-//     accessToken: refreshedAccessToken,
-//     tokenType: 'Bearer', //responseTokenType, // res.headers["token-type"], // Should always be "Bearer"
-//     client: refreshedClient, // previousAuthn.client, previousAuthn.client,
-//     expiry: refreshedExpiry,
-//     uid: responseUid, // previousAuthn.uid,
-//     // id: previousAuthn?.id,
-//   };
-//   console.log(
-//     'DEBUG ###### deviceAuthnResRefresh CURRENT REFRESHED? AUTHN =',
-//     refreshedAuthn
-//   );
-
-//   return refreshedAuthn;
-// };
 
 export {
     authnToHttpHeaders,
@@ -1161,169 +859,4 @@ export {
     API_APPSTATS_ROUTE,
     API_APPSTATS_METHOD,
 };
-/****************************************************
 
- const config = {
-  baseURL: API_BASE_URL,
-  // timeout: 5000,
-  // headers: { "X-Custom-Header-project": "project8" },
-  headers: {
-    // "access-token": authn.accessToken,
-    // client: authn.client,
-    // expiry: authn.expiry,
-    // uid: authn.uid,
-    // "Content-Type": "application/json;charset=UTF-8",
-    "Access-Control-Allow-Origin": "*",
-    // "User-Agent": "PostmanRuntime/7.26.8",
-    Accept: "*
-    /*",
-    // "Postman-Token": "e738542b-0d9b-4edd-88a3-32a0ee0ae12d",
-    // Host: "127.0.0.1:3001",
-    // "Accept-Encoding": "gzip, deflate, br",
-    Connection: "keep-alive",
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-XSS-Protection": "1; mode=block",
-    "X-Content-Type-Options": "nosniff",
-    "X-Download-Options": "noopen",
-    "X-Permitted-Cross-Domain-Policies": "none",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Content-Type": "application/json; charset=utf-8",
-    // "access-token": "do4e6kh2Rf14xsJLVH9Qjw",
-    // "token-type": "Bearer",
-    // client: "Odt4HBsX6p81oxho55uuyQ",
-    // expiry: 1623197681,
-    // uid: "user50@m50.co",
-    // ETag: 'W/"4f01a291e55e6acbd25331dc315cd52d"',
-    "Cache-Control": "max-age=0, private, must-revalidate",
-    // "X-Request-Id": "6d81da9d-dae6-445f-979f-8d7f55578480",
-    // "X-Runtime": 0.337923,
-    // Vary: "Origin",
-    // "Transfer-Encoding": "chunked",
-  },
-  timeout: 3000,
-};
-
- axios.defaults.baseURL = API_BASE_URL;
- // axios.defaults.headers.common["Authorization"] = "Bearer undefined";
- // axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
- axios.defaults.headers.common["Origin"] = "http://localhost:3001";
- http: axios.defaults.headers.common["Accept"] = "*
- /*";
- axios.defaults.headers.common["Connection"] = "keep-alive";
- axios.defaults.headers.common["Content-Type"] =
- "application/json; charset=utf-8";
- axios.defaults.headers.common["Cache-Control"] =
- "max-age=0, private, must-revalidate";
- // axios.defaults.headers.common["Access-Control-Request-Headers"] = "X-Custom-Header-project; X-Requested-With; etc...";
- // axios.defaults.headers.common["X-Requested-With"] = "this app";
- // axios.defaults.headers.common["X-Custom-Header-project"] = "this proj";
- // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
- // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
- // axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
- // axios.defaults.headers.post["Content-Type"] =   "application/x-www-form-urlencoded";
-
- *******************************************************/
-
-/**
- * curl -H "Origin: http://example.com" \
- -H "Access-Control-Request-Method: POST" \
- -H "Access-Control-Request-Headers: X-Requested-With" \
- -X OPTIONS --verbose \
- https://www.googleapis.com/discovery/v1/apis?fields=
-
- *
- */
-
-/*********
- const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 5000,
-  // headers: { "X-Custom-Header-project": "project8" },
-});
- ************/
-
-////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-/***********************************************************
- const API_HOST = "http://127.0.0.1";
- const API_PORT = "3001";
- const API_SIGNUP_ROUTE = "/authn";
- const API_SIGNUP_METHOD = "POST";
- const API_SIGNIN_ROUTE = "/authn/sign_in";
- const API_SIGNIN_METHOD = "POST";
- const API_SIGNOUT_ROUTE = "/authn/sign_out";
- const API_SIGNOUT_METHOD = "DELETE";
-
- const axiosInstance = axios.create({
-  baseURL: `${API_HOST}:${API_PORT}`,
-  timeout: 5000,
-  // headers: { "X-Custom-Header-project": "project8" },
-});
-
- const getDataForUserId = async (
- apiRoute,
- params,
- { accessToken,
-    // tokenType, 
-    client, expiry, uid, id }
- ) => {
-  // NOTE: must retrieve and return the uid, authentication-token and the client for use for the next request
-
-  return axiosInstance
-    .get(`${apiRoute}`, {
-      headers: {
-        "access-token": accessToken,
-        client: client,
-        expiry: expiry,
-        uid: uid,
-      },
-    })
-    .then(function (res) {
-      console.log(
-        res.data,
-        res.status,
-        res.statusText,
-        res.headers,
-        res.request
-      );
-      console.log({
-        acessToken: res.headers["access-token"],
-        // tokenType: res.headers["token-type"],
-        expiry: res.headers["expiry"],
-        client: res.headers["client"],
-        uid: res.headers["uid"],
-      });
-      return {
-        data: res.data,
-        authnCredentials: {
-          accessToken: res.headers["access-token"],
-          // tokenType: tokenType,
-          client: res.headers["client"],
-          expiry: res.headers["expiry"],
-          uid: res.headers["uid"],
-          id: id,
-        },
-      };
-    })
-    .catch(function (err) {
-      console.log(err);
-      return { error: err };
-    });
-};
-
- export { getDataForUserId };
-
- */
-
-// Started PUT "/authn" for 127.0.0.1 at 2021-05-26 18:38:42 -0600
-// Processing by DeviseTokenAuth::RegistrationsController#update as */*
-//   Parameters: {"first_name"=>"Cierra", "last_name"=>"Simonis", "preferred_name"=>"Cierranea", "address"=>"60568 Turcotte Squareet", "registration"=>{"first_name"=>"Cierra", "last_name"=>"Simonis", "preferred_name"=>"Cierranea", "address"=>"60568 Turcotte Squareet"}}
-//   User Load (0.5ms)  SELECT "users".* FROM "users" WHERE "users"."uid" = $1 LIMIT $2  [["uid", "u2@m2.co"], ["LIMIT", 1]]
-// Unpermitted parameter: :registration
-// Started POST "/rails/active_storage/direct_uploads" for 127.0.0.1 at 2021-05-26 18:38:42 -0600
-// Processing by DirectUploadsController#create as JSON
-//   Parameters: {"blob"=>{"filename"=>"tumblr_pkj9u8VUnx1tg9ln0_640 (1).jpg", "content_type"=>"image/jpeg", "byte_size"=>47689, "checksum"=>"SzMK7PwjcSx02O/jMwp6IA=="}, "direct_upload"=>{"blob"=>{"filename"=>"tumblr_pkj9u8VUnx1tg9ln0_640 (1).jpg", "content_type"=>"image/jpeg", "byte_size"=>47689, "checksum"=>"SzMK7PwjcSx02O/jMwp6IA=="}}}
-// HTTP Origin header (https://localhost:3000) didn't match request.base_url (http://127.0.0.1:3001)
-// Completed 422 Unprocessable Entity in 1ms (ActiveRecord: 0.0ms | Allocations: 1134)
-
-// ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken)

@@ -1,13 +1,8 @@
 // ConversationData
 import React from 'react';
 import {FaHandsHelping, FaLeaf, FaParachuteBox} from 'react-icons/fa';
-// import tasks from '../../services/TasksServices';
 import './ConversationData.css';
-// import {
-//   getProfileConversations,
-//   createConversation,
-// } from "../../services/ConversationsServices";
-// import { UserContext } from "../../services/LoggedProfileContext";
+
 import {ROLE_AS_REQUESTOR, ROLE_AS_VOLUNTEER,} from '../../services/appServices';
 import {MATERIALNEED, ONETIMETASK} from '../../services/apiServices';
 

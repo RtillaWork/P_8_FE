@@ -51,7 +51,6 @@ export default function Conversation({...restOfProps}) {
             });
             fetchAConversation(userAuthn, parseInt(convid))
                 .then((res) => {
-                    // console.log('###FETCH A CONVERSATION RES: ', res);
                     setUserAuthn(deviseAuthnFromRes(userAuthn, res));
                     setConversation(res.data);
                     setMessagesTracker(Date.now());
@@ -61,20 +60,7 @@ export default function Conversation({...restOfProps}) {
                     });
                 })
                 .catch((err) => {
-                    //   console.log(
-                    //   'DEBUG FETCH A CONVERSATION in USEEFFECT in <CONVERSATION> ERROR: ',
-                    //   err?.message?,
-                    //   err?.response?.headers,
-                    //   err?.response?.data,
-                    //   JSON.stringify(err)
-                    // );
-                    // setUserAuthn(deviseAuthnFromErr(userAuthn, err));
-                    // console.log(
-                    //   'DEBUG fetchAConversation  FETCH A CONVERSATION in USEEFFECT in <CONVERSATION>ERROR: ',
-                    //   // err.response.headers,
-                    //   // err.response.data,
-                    //   JSON.stringify(err)
-                    // );
+
                     setUserAuthn(deviseAuthnFromErr(userAuthn, err));
                     setstatus({
                         type: STATUS_ERROR,
@@ -86,38 +72,14 @@ export default function Conversation({...restOfProps}) {
 
     useEffect(() => {
         if (conversation) {
-            // console.log(
-            //   'IF CONVERSATION USEEFFECT MESSAGES disp conversation: ',
-            //   conversation
-            // );
+
             fetchMessagesByConversationId(userAuthn, conversation.id)
                 .then((res) => {
-                    // console.log(
-                    //   '#FROM <Conversation/> FETCH MESSAGES THEN res: ',
-                    //   res.data,
-                    //   res.status,
-                    //   res.statusText,
-                    //   res.headers
-                    //   // res.request
-                    // );
+
                     setUserAuthn(deviseAuthnFromRes(userAuthn, res));
                     setMessages(res.data);
                 })
                 .catch((err) => {
-                    // console.log(
-                    //   'DEBUG FETCH MESSAGES in USEEFFECT in <CONVERSATION> ERROR: ',
-                    //   err?.message?,
-                    //   err?.response?.headers,
-                    //   err?.response?.data,
-                    //   JSON.stringify(err)
-                    // );
-                    // setUserAuthn(deviseAuthnFromErr(userAuthn, err));
-                    // console.log(
-                    //   'DEBUG FETCH MESSAGES in USEEFFECT in <CONVERSATION> ERROR: ',
-                    //   // err.response.headers,
-                    //   // err.response.data,
-                    //   JSON.stringify(err)
-                    // );
                     setUserAuthn(deviseAuthnFromErr(userAuthn, err));
                     setstatus({
                         type: STATUS_ERROR,
@@ -140,16 +102,7 @@ export default function Conversation({...restOfProps}) {
         };
     });
 
-    // const handleCancelMessage = (e) => {
-    //   // reset UI to only already sent messages
-    //   e.preventDefault();
-    //   setChatText('');
-    // };
 
-    // const handleDeleteMessage = (e) => {
-    //   // reset UI to only already sent messages
-    //   e.preventDefault();
-    // };
     const handleChatText = (e) => {
         // update
         e.preventDefault();
@@ -160,24 +113,12 @@ export default function Conversation({...restOfProps}) {
         e.preventDefault();
         leaveAConversation(userAuthn, conversation.id)
             .then((res) => {
-                // console.log(
-                //   '#FROM <Conversation/> LEAVE CONVERSATION THEN res: ',
-                //   res.data,
-                //   res.status,
-                //   res.statusText,
-                //   res.headers
-                //   // res.request
-                // );
+
                 setUserAuthn(deviseAuthnFromRes(userAuthn, res));
                 history.push('/profile/conversations');
             })
             .catch((err) => {
-                // console.log(
-                //   'DEBUG Leave a conversation in <CONVERSATION> ERROR: ',
-                //   // err.response.headers,
-                //   // err.response.data,
-                //   JSON.stringify(err)
-                // );
+
                 setUserAuthn(deviseAuthnFromErr(userAuthn, err));
                 setstatus({
                     type: STATUS_ERROR,
@@ -185,36 +126,6 @@ export default function Conversation({...restOfProps}) {
                 });
             });
     };
-
-    // const handleMarkTaskAsFullfilled = (e) => {
-    //   e.preventDefault();
-    //   updateATaskAsFullfilled(userAuthn, conversation.task_id)
-    //     .then((res) => {
-    //       console.log(
-    //         '#FROM <Conversation/> Mark a Task as fullfilled in THEN res: ',
-    //         res.data,
-    //         res.status,
-    //         res.statusText,
-    //         res.headers
-    //         // res.request
-    //       );
-    //       setUserAuthn(deviseAuthnFromRes(userAuthn, res));
-    //       history.push('/profile/conversations');
-    //     })
-    //     .catch((err) => {
-    //       console.log(
-    //         'DEBUG Mark a Task as fullfilled in <CONVERSATION> ERROR: ',
-    //         // err.response.headers,
-    //         // err.response.data,
-    //         JSON.stringify(err)
-    //       );
-    //       setUserAuthn(deviseAuthnFromErr(userAuthn, err));
-    //       setstatus({
-    //         type: STATUS_ERROR,
-    //         content: err.response?.data,
-    //       });
-    //     });
-    // };
 
     const handleSendMessage = (e) => {
         // create new message associated with props.
