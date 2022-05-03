@@ -105,9 +105,7 @@ const fetchTasks = async (
 //////////////////////////////
 const fetchATask = async (
     authn,
-
     taskId
-
 ) => {
     const reqConfig = {
         url: `${API_TASKS_ROUTE}/${parseInt(taskId)}`,
@@ -126,7 +124,6 @@ const fetchATask = async (
 //////////////////////////////
 const fetchProfileTasks = async (
     authn
-
 ) => {
     const reqConfig = {
         url: API_PROFILE_TASKS_ROUTE,
@@ -239,7 +236,6 @@ const updateTask = async (
 const updateATaskAsFullfilled = async (
     authn,
     taskId
-
 ) => {
 
     const requestConfig = {
@@ -264,7 +260,6 @@ const updateATaskAsFullfilled = async (
 const updateATaskAsPublished = async (
     authn,
     taskId
-
 ) => {
 
     const requestConfig = {
@@ -288,7 +283,6 @@ const updateATaskAsPublished = async (
 const updateATaskAsUnpublished = async (
     authn,
     taskId
-
 ) => {
 
 
@@ -314,7 +308,6 @@ const updateATaskAsUnpublished = async (
 const deleteATask = async (
     authn,
     taskId
-
 ) => {
 
     const requestConfig = {

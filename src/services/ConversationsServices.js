@@ -59,7 +59,6 @@ const fetchConversations = async (
 const fetchAConversation = async (
     authn, //{ accessToken, client, expiry, uid, id },
     convId
-
 ) => {
     const reqConfig = {
         url: `${API_CONVERSATIONS_ROUTE}/${parseInt(convId)}`,
@@ -77,7 +76,6 @@ const fetchAConversation = async (
 const fetchAConversationByTaskId = async (
     authn, //{ accessToken, client, expiry, uid, id },
     taskId
-
 ) => {
     const reqConfig = {
         url: `${API_TASKS_ROUTE}/${parseInt(taskId)}/conversation`,

@@ -30,7 +30,6 @@ export default function Conversations({
     const {taskid} = useParams();
 
 
-
     const [conversation, setConversation] = useState(null);
     const [conversationExists, setConversationExists] = useState(true);
     const [status, setstatus] = useState({type: STATUS_READY, content: null});
@@ -94,7 +93,6 @@ export default function Conversations({
         return (
             <>
                 <ConversationData conversation={conversation}/>
-
 
 
                 <Link to={`/conversations/${conversation.id}`} className='button'>
