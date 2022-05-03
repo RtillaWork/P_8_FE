@@ -93,8 +93,6 @@ export default function UserProfile({
         e.preventDefault();
         setstatus({type: STATUS_READY, content: null});
 
-        // console.log('FORM NAME: ', e.target.name);
-        // console.log('FORM VALUE: ', e.target.value);
         switch (e.target.name) {
             case 'first_name': {
                 setFirstName(e.target.value);
@@ -137,45 +135,10 @@ export default function UserProfile({
         }
     };
 
-    // const handleFirstNameChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setFirstName(e.target.value);
-    //   // if (preferredName == '') {
-    //   setPreferredName(e.target.value);
-    //   // }
-    // };
-    // const handleLastNameChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setLastName(e.target.value);
-    // };
-
-    // const handlePreferredNameChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   // if (preferredName == '') {
-    //   //   setPreferredName(firstName);
-    //   // } else {
-    //   setPreferredName(e.target.value);
-    //   // }
-    // };
-    // const handleAvatarChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   // setAvatar(e.target.value);
-    //   setAvatar(buildMyRobohashUrl());
-    // };
-    // const handleAddressChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setAddress(e.target.value);
-    // };
 
     const handleGovIdChange = (e) => {
         e.preventDefault();
-        // console.log(e.target.value);
-        // setGovId(e.target.value);
+
 
         // Update the blob now with the back-end and get the back end created blob data...
         // ... then update govId with an image url value
@@ -211,28 +174,7 @@ export default function UserProfile({
         setdefaultLat(userCoords.lat);
         setdefaultLng(userCoords.lng);
     };
-    // const handleDefaultLatChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setdefaultLat(e.target.value);
-    // };
-    // const handleDefaultLngChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setdefaultLng(e.target.value);
-    // };
 
-    // const handlePasswordChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   // setIsPasswordUpdating(true);
-    //   setPassword(e.target.value);
-    // };
-
-    // const handlePasswordConfirmationChange = (e) => {
-    //   e.preventDefault();
-    //   setPasswordConfirmation(e.target.value);
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -251,19 +193,8 @@ export default function UserProfile({
                     history.push('/'); // commented out as suspect it causes 401 unauthorized after redirect to main
                 })
                 .catch((err) => {
-                    // const errRes = err.response ?? {
-                    //   headers: null,
-                    //   data: err.message,
-                    // };
-                    // console.log(
-                    //   'DEBUG UpdateUserProfile: ',
-                    //   errRes?.headers,
-                    //   errRes?.data?.status,
-                    //   errRes?.data?.errors,
-                    //   '################ errRes JSON STRINGIFIED BEGIN#########',
-                    //   JSON.stringify(errRes),
-                    //   '################ errRes JSON STRINGIFIED END #########',
-                    // );
+
+
                     setUserAuthn(deviseAuthnFromErr(userAuthn, err));
                     setstatus({
                         type: STATUS_ERROR,
@@ -277,20 +208,6 @@ export default function UserProfile({
             );
             // setAvatar(buildMyRobohashUrl(firstName));
 
-            // const { resUserProfile, resAuthnCredentials, error } =
-            //   await updateUserProfile(
-            //     userAuthn,
-            //     // updateUserAuthnFunc,
-            //     // updateUserProfileFunc,
-            //     firstName,
-            //     lastName,
-            //     preferredName,
-            //     avatar,
-            //     address,
-            //     defaultLat,
-            //     defaultLng,
-            //     govId
-            //   );
             updateUserProfile(
                 userAuthn,
                 firstName,
@@ -319,19 +236,7 @@ export default function UserProfile({
                     history.push('/');
                 })
                 .catch((err) => {
-                    // const errRes = err.response ?? {
-                    //   headers: null,
-                    //   data: err.message,
-                    // };
-                    // console.log(
-                    //   'DEBUG UpdateUserProfile: ',
-                    //   errRes?.headers,
-                    //   errRes?.data?.status,
-                    //   errRes?.data?.errors,
-                    //   '################ errRes JSON STRINGIFIED BEGIN#########',
-                    //   JSON.stringify(errRes),
-                    //   '################ errRes JSON STRINGIFIED END #########',
-                    // );
+
                     setUserAuthn(deviseAuthnFromErr(userAuthn, err));
                     setstatus({
                         type: STATUS_ERROR,
@@ -339,41 +244,6 @@ export default function UserProfile({
                     });
                 });
 
-            // previous version
-            // await updateUserProfile(
-            //   firstName,
-            //   lastName,
-            //   preferredName,
-            //   avatar,
-            //   address,
-            //   // addressCoords,
-            //   // email,
-            //   govId,
-            //   // password,
-            //   // passwordConfirmation,
-            //   userAuthn
-            // );
-            // console.log("### FROM <PROFILE> User update: ", resUserProfile);
-            // console.log("### FROM <PROFILE>Authn update: ", resAuthnCredentials);
-            // if (resUserProfile) {
-            //   setUserProfile(resUserProfile);
-            //   console.log("# UPDATED USER PROFILE: resUserProfile", resUserProfile);
-            // } else {
-            //   console.log("ERROR PROFILE UPDATE: ERR", error);
-            // }
-            // if (resAuthnCredentials) {
-            //   setUserAuthn(resAuthnCredentials);
-            //   console.log(
-            //     "# UPDATED USER AUTHN after update: resAuthnCredentials",
-            //     resAuthnCredentials
-            //   );
-            // } else {
-            //   console.log("ERROR PROFILE UPDATE: ERR", error);
-            // }
-            // if Signin error returns user does not exist
-            // setIsSignUp(true);
-
-            // if is
         }
     };
 
@@ -409,10 +279,7 @@ export default function UserProfile({
                     content: err.response.data.errors,
                 });
             });
-        // .catch((err) =>
-        //   console.log("# PROFILE delete user profile error: ", err)
-        // );
-        // }
+
     };
     // if (govId == null || govId == undefined || govId == '') {
     //   return <Redirect to='/' />;
@@ -532,15 +399,6 @@ export default function UserProfile({
                             </div>
                         </div>
 
-                        {
-                            /////////////////
-                        }
-
-                        {
-                            /////////////////////////////
-                            ///////////////////////////////
-                            /////////////////////////////
-                        }
 
                         <div className='field'>
                             <div className='control'>
@@ -602,28 +460,9 @@ export default function UserProfile({
                             </div>
                         </div>
 
-                        {
-                            //////////////////////////////
-                            /////////////////////////////////
-                            /////////////////////////////
-                        }
 
                         <div className='field'>
-                            {
-                                // <div className="control">
-                                // <label>
-                                //   Governement Id
-                                // <input
-                                //   className="input is-medium"
-                                //   name="gov_id"
-                                //   type="text"
-                                //   placeholder="Please upload your new government id here"
-                                //   value={govId}
-                                //   // onChange={handleGovIdChange}
-                                // />
-                                // </label>
-                                // </div>
-                            }
+
                             {govId == '' ? (
                                 <strong>
                                     A Governement Id is required to keep using the service (pdf,
@@ -640,47 +479,7 @@ export default function UserProfile({
                                 </a>
                             )}
                         </div>
-                        {
-                            // <div className='field'>
-                            //   <div className='control'>
-                            //     {!govIdDocument ? (
-                            //       <label>
-                            //         Select your Governement Id Document:
-                            //         {status.content?.gov_id_document ? (
-                            //           <span className='tag is-warning'>
-                            //             {status.content?.gov_id_document?.join(', ')}
-                            //           </span>
-                            //         ) : null}
-                            //         <input
-                            //           className='input is-medium'
-                            //           name='gov_id_document'
-                            //           accept='application/pdf, image/jpeg, image/png'
-                            //           type='file'
-                            //           value={govId}
-                            //           placeholder='Please select your government id here'
-                            //           // value={govIdDocument}
-                            //           onChange={handleFormChange}
-                            //         />
-                            //       </label>
-                            //     ) : (
-                            //       <label>
-                            //         Attach your Governement Id Document:
-                            //         <button
-                            //           className='button is-block is-medium'
-                            //           onClick={handleGovIdChange}>
-                            //           <strong>Click to Attach your government id</strong>
-                            //         </button>
-                            //       </label>
-                            //     )}
-                            //   </div>
-                            // </div>
-                        }
 
-                        {
-                            //////////////////////////////
-                            /////////////////////////////////
-                            /////////////////////////////
-                        }
 
                         <div className='column center has-text-centered'>
                             <div className='description'>
@@ -774,5 +573,5 @@ export default function UserProfile({
             </div>
         </section>
     );
-    // }
+
 }

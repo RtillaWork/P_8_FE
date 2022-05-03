@@ -58,13 +58,7 @@ export default function TaskPopup({task, ...restOfProps}) {
                             'Something went wrong with object task in Task component. object not found',
                     },
                 });
-                // {
-                //   status.content?.description ? (
-                //     <span className='tag is-warning'>
-                //       {status.content?.description?.join(', ')}
-                //     </span>
-                //   ) : null;
-                // }
+
             }
         };
 
@@ -87,16 +81,16 @@ export default function TaskPopup({task, ...restOfProps}) {
                     <>
                         <FaParachuteBox/>
                     </>
-                ) : //<i className="fas fa-parachute-box" aria-hidden="true"></i>
+                ) :
                 aTask.kind === ONETIMETASK ? (
                     <>
                         {' '}
                         <FaHandsHelping/>
                     </>
                 ) : (
-                    // <i className="fas fa-hands-helping" aria-hidden="true"></i>
+
                     <FaLeaf/>
-                    // <i className="fas fa-leaf" aria-hidden="true"></i>
+
                 )}
           </span>
                     Request id {aTask.id}: {aTask.title}

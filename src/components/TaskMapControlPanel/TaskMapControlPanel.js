@@ -16,12 +16,7 @@ export default function TaskMapControlPanel({
     const [position, setPosition] = useState(aMap.getCenter());
 
     const onClickaUpdateUserCoords = useCallback(() => {
-        // console.log(
-        //   ' # FROM onClickaUpdateUserCoords :',
-        //   typeof dosetUserCoords,
-        //   'position: ',
-        //   position
-        // );
+
         dosetUserCoords(position);
         // aMap.setView(aMapCenter, aMapZoom);
     }, [aMap, position]);
@@ -44,16 +39,7 @@ export default function TaskMapControlPanel({
 
     useEffect(() => {
         const userCoordsRefreshTimer = setTimeout(() => {
-            // console.log(
-            //   "CALLBACK HERE SetTimeout IN NOW!",
-            //   {
-            //     lat: position.lat,
-            //     lng: position.lng,
-            //   },
-            //   JSON.stringify(userCoords),
-            //   typeof updateCoordsCallback,
-            //   updateCoordsCallback?.toString()
-            // );
+
             dosetMapCoords(position);
         }, MAPCOORDS_AUTOUPDATE_TIMEOUT);
 
@@ -95,49 +81,16 @@ export default function TaskMapControlPanel({
                 onClick={onClickDefaultCoords}>
                 Go back Home
             </button>
-            {
-                // <button onClick={onClickDefaultCoords}>
-                //   Go to the next closest request
-                // </button>
-                // <button onClick={onClickDefaultCoords}>Go to the oldest request</button>
-                // <button onClick={onClickDefaultCoords}>Go to the newest request</button>
-                // <button onClick={onClickDefaultCoords}>Pick a random request</button>
-            }
+
         </>
     );
 
     return (
         <>
-            {
-                // <button
-                //   className='button is-primary is-light is-small'
-                //   onClick={handleOnPanelClick}>
-                //   Switch panel
-                // </button>
-                // {panels[panelChoice]}
-                //
-                // <button
-                //   className='button is-outligned is-light is-small is-fullwidth'
-                //   onClick={handleOnPanelClick}>
-                //   {panels[panelChoice]}
-                // </button>
-            }
+
             <div className='' onClick={handleOnPanelClick}>
                 {panels[1]}
             </div>
         </>
     );
 }
-
-//  return (
-//    <>
-//      zoom: {aMap.getZoom()}, lat: {position.lat.toFixed(16)}, lng:
-//      {position.lng.toFixed(16)}
-//      <button onClick={onClickaUpdateUserCoords}>
-//        Set user coordinates here
-//      </button>
-//      <button onClick={onClickDefaultCoords}>
-//        Go to your default coordinates
-//      </button>
-//    </>
-//  );

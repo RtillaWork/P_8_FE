@@ -82,8 +82,6 @@ export default function TaskForm({
         e.preventDefault();
         setstatus({type: STATUS_READY, content: null});
 
-        // console.log('FORM NAME: ', e.target.name);
-        // console.log('FORM VALUE: ', e.target.value);
         switch (e.target.name) {
             case 'title': {
                 setTitle(e.target.value);
@@ -120,14 +118,7 @@ export default function TaskForm({
                 });
                 break;
             }
-            // case 'task_coords': {
-            //   setTaskCoords(e.target.value);
-            //   break;
-            // }
-            // case 'password_confirmation': {
-            //   setPasswordConfirmation(e.target.value);
-            //   break;
-            // }
+
             default:
                 break;
         }
@@ -155,38 +146,6 @@ export default function TaskForm({
         setTaskCoords(mapCoords);
     };
 
-    // const handleTitleChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setTitle(e.target.value);
-    // };
-    // const handleKindChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setKind(e.target.value);
-    // };
-
-    // const handleDescriptionChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setDescription(e.target.value);
-    // };
-    // const handleIsPublishedChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setIsPublished(e.target.value);
-    // };
-    // const handleIsFullfilledChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setIsFullfilled(e.target.value);
-    // };
-
-    // const handleTaskCoordsChange = (e) => {
-    //   e.preventDefault();
-    //   // console.log(e.target.value);
-    //   setTaskCoords(e.target.value);
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -406,75 +365,6 @@ export default function TaskForm({
                             </div>
                         </div>
 
-                        {
-                            //   debug ? (
-                            //   <div className='field'>
-                            //     <div className='columns is-hcentered'>
-                            //       <div className='column'>
-                            //         <div className='control'>
-                            //           <label>
-                            //             Published:{' '}
-                            //             {status.content?.is_published ? (
-                            //               <span className='tag is-warning'>
-                            //                 {status.content?.is_published?.join(', ')}
-                            //               </span>
-                            //             ) : null}
-                            //             <div className='select'>
-                            //               <select
-                            //                 className='input is-medium'
-                            //                 name='is_published'
-                            //                 value={isPublished}
-                            //                 onChange={handleFormChange}>
-                            //                 <option value={true}>Yes</option>
-                            //                 <option value={false}>No</option>
-                            //               </select>
-                            //             </div>
-                            //           </label>
-                            //         </div>
-                            //       </div>
-                            //     </div>
-                            //   </div>
-                            // ) : null
-                        }
-
-                        {
-                            // <div className='field'>
-                            //   <div className='control'>
-                            //     <label className='subtitle is-4'>
-                            //       Fullfilled:{' '}
-                            //       {status.content?.is_fullfilled ? (
-                            //         <span className='tag is-warning'>
-                            //           {status.content?.is_fullfilled?.join(', ')}
-                            //         </span>
-                            //       ) : null}
-                            //       <div className='select'>
-                            //         <select
-                            //           className='input is-medium'
-                            //           name='is_fullfilled'
-                            //           value={isFullfilled}
-                            //           onChange={handleFormChange}>
-                            //           <option value={true}>Yes</option>
-                            //           <option value={false}>No</option>
-                            //         </select>
-                            //       </div>
-                            //     </label>
-                            //   </div>
-                            // </div>
-                        }
-
-                        {
-                            // <div className='columns'>
-                            //   <div className='column left'>
-                            //   </div>
-                            //   <div className='column right'>
-                            //     <p></p>
-                            //   </div>
-                            // </div>
-                        }
-
-                        {
-                            /////////////////
-                        }
 
                         <div className='field'>
                             <div className='control'>
@@ -545,58 +435,7 @@ export default function TaskForm({
                                 </div>
                             </div>
                         </div>
-                        {
-                            ////////////////////
-                        }
-
-                        {
-                            //////////////
-                        }
-
-                        {
-                            // <div className='columns'>
-                            //   <button className='button is-info' onClick={handleFromMapCoords}>
-                            //     Fill coordinates from current map location instead
-                            //   </button>
-                            //   <div className='column left'>
-                            //     <div className='field'>
-                            //       <div className='control'>
-                            //         <label className='subtitle is-4'>
-                            //           Latitude
-                            //           <input
-                            //             className='input is-medium'
-                            //             name='lat'
-                            //             type='text'
-                            //             placeholder='lat'
-                            //             value={taskCoords.lat}
-                            //             onChange={handleTaskCoordsChange}
-                            //           />
-                            //         </label>
-                            //       </div>
-                            //     </div>
-                            //   </div>
-                            //   <div className='column right'>
-                            //     <div className='field'>
-                            //       <div className='control'>
-                            //         <label className='subtitle is-4'>
-                            //           Logitude
-                            //           <input
-                            //             className='input is-medium'
-                            //             name='lng'
-                            //             type='text'
-                            //             placeholder='lng'
-                            //             value={taskCoords.lng}
-                            //             onChange={handleTaskCoordsChange}
-                            //           />
-                            //         </label>
-                            //       </div>
-                            //     </div>
-                            //   </div>
-                            // </div>
-                        }
-                        {
-                            ///////////////////////////
-                        }
+                        
 
                         {isUpdating ? (
                             <button

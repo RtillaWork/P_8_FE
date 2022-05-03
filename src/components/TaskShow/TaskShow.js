@@ -3,7 +3,6 @@ import {useParams,} from 'react-router-dom';
 
 import {Notification, TasksContext, UserAuthnContext, UserProfileContext,} from '../../AppPrelude';
 import TaskDetails from '../TaskDetails';
-// import Tasks from '../Tasks';
 import {fetchATask,} from '../../services/TasksServices';
 
 import {deviseAuthnFromErr, deviseAuthnFromRes,} from '../../services/apiServices';
@@ -75,15 +74,9 @@ export default function TaskShow({
 
     return aTask ? (
         <>
-            {
-                // <TaskData task={aTask} />
-            }
+
             <TaskDetails task={aTask}/>
-            {
-                // <div className='container'>
-                //   <ConversationList taskid={aTask.id} />
-                // </div>
-            }
+
         </>
     ) : (
         <Notification type='Error' content={status?.content?.toString()}/>
