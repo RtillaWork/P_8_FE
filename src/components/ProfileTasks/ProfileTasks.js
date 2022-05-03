@@ -5,8 +5,7 @@ import TaskAction from '../TaskAction/TaskAction';
 import {Notification, TasksContext} from '../../AppPrelude';
 
 export default function ProfileTasks({
-                                         // taskListType,
-                                         // selectedTask,
+
                                          ...restOfProps
                                      }) {
     const {openTasks, profileTasks} = useContext(TasksContext);

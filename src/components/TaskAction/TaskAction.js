@@ -65,13 +65,7 @@ export default function TaskAction({task, ...restOfProps}) {
                             'Something went wrong with object task in Task component. object not found',
                     },
                 });
-                // {
-                //   status.content?.description ? (
-                //     <span className='tag is-warning'>
-                //       {status.content?.description?.join(', ')}
-                //     </span>
-                //   ) : null;
-                // }
+
             }
         };
 
@@ -117,13 +111,7 @@ export default function TaskAction({task, ...restOfProps}) {
                         'Something went wrong with object task in Task component. object not found',
                 },
             });
-            // {
-            //   status.content?.description ? (
-            //     <span className='tag is-warning'>
-            //       {status.content?.description?.join(', ')}
-            //     </span>
-            //   ) : null;
-            // }
+
         }
     };
 
@@ -198,16 +186,7 @@ export default function TaskAction({task, ...restOfProps}) {
 
     const profileUserTaskButtons = (
         <>
-            {
-                // <Link
-                //   type='button'
-                //   /**TODO? onClick={ CREATE HERE POST NEW /task/:id/conversations and get back its new ID then route     } */
-                //   /**to={`/tasks/${props.task.id.toString()}/conversations`} */
-                //   className='card-footer-item button is-primary'
-                //   to={`/requests/${aTask.id}/conversations`}>
-                //   Conversation(s)
-                // </Link>{' '}
-            }
+
             <Link
                 type='button'
                 className='card-footer-item button is-info'
@@ -248,16 +227,7 @@ export default function TaskAction({task, ...restOfProps}) {
                     Unpublish
                 </button>
             ) : null}
-            {
-                //   aTask.is_fullfilled ? (
-                //   <button
-                //     type='button'
-                //     onClick={handleDeleteATask}
-                //     className='card-footer-item button is-danger'>
-                //     delete
-                //   </button>
-                // ) : null
-            }
+
         </>
     );
 
@@ -315,23 +285,7 @@ export default function TaskAction({task, ...restOfProps}) {
                 to={`/requests/${aTask.id}/conversations`}>
                 Offer Help
             </Link>
-            {
-                // <button
-                //   type='button'
-                //   onClick={() => {
-                //     // console.log(userProfile);
-                //     hideTask(parseInt(aTask.id));
-                //   }}
-                //   className='card-footer-item button is-link'>
-                //   Hide
-                // </button>
-                // <button
-                //   type='button'
-                //   onClick={() => pinTask(parseInt(aTask.id))}
-                //   className='card-footer-item button is-link'>
-                //   Pin
-                // </button>
-            }
+
         </>
     );
 
@@ -353,13 +307,13 @@ export default function TaskAction({task, ...restOfProps}) {
           <span className='icon is-large'>
             {aTask.kind === MATERIALNEED ? (
                     <FaParachuteBox/>
-                ) : //<i className="fas fa-parachute-box" aria-hidden="true"></i>
+                ) :
                 aTask.kind === ONETIMETASK ? (
                     <FaHandsHelping/>
                 ) : (
-                    // <i className="fas fa-hands-helping" aria-hidden="true"></i>
+
                     <FaLeaf/>
-                    // <i className="fas fa-leaf" aria-hidden="true"></i>
+
                 )}
           </span>
                 </h3>
@@ -380,8 +334,7 @@ export default function TaskAction({task, ...restOfProps}) {
                                 {aTask.description ? (
                                     <span className='content'>
                     {aTask.description}
-                                        {/* <br/> */}
-                                        {/* <time datetime={props.aTask.dateLastUpdate.toString()}>{Date(props.aTask.dateLastUpdate).toString()}</time> */}
+
                   </span>
                                 ) : (
                                     <button

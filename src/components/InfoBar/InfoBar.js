@@ -105,17 +105,7 @@ export default function InfoBar(props) {
     };
 
     useEffect(() => {
-        // const floor_radius = MIN_RADIUS ?? 1.0;
-        // const inflection1_radius = 10 * MIN_RADIUS ?? 100.0;
-        // const inflection2_radius = 100 * MIN_RADIUS ?? 100.0;
-        // const inflection3_radius = 1000 * MIN_RADIUS ?? 100.0;
-        // const inflection4_radius = 10000 * MIN_RADIUS ?? 100.0;
-        // const ceiling_radius = MAX_RADIUS ?? 1000000.0;
-        // const floor = 0;
-        // const inflection = 60;
-        // const ceiling = 100;
 
-        // let sliderRadius = MIN_RADIUS;
 
         const timerForsliderRadius = setTimeout(() => {
             setUserRadius(sliderRadius);
@@ -245,17 +235,11 @@ export default function InfoBar(props) {
         </div>
     );
 
-    // if (props.errors) {
-    //   return (
-    //     <h1>
-    //       <p>{props.errors}</p>
-    //     </h1>
-    //   );
-    // } else {
+
     return (
         <div className='box' onClick={handleOnPanelClick}>
             {panel[infoBarPanel]}
         </div>
     );
-    // }
+
 }

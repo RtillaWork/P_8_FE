@@ -38,10 +38,3 @@ export default function Messages({messages, ...restOfProps}) {
     return <ul>{messagesJSX}</ul>;
 }
 
-// const messagesJSX = messages.map((message) => {
-//   return (
-//     <li key={message.id.toString()}>
-//       <Message message={message} />
-//     </li>
-//   );
-// });

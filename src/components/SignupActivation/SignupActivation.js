@@ -76,8 +76,7 @@ export default function SignupActivation({userCoords, ...restOfProps}) {
         e.preventDefault();
         setstatus(() => ({type: STATUS_READY, content: null}));
 
-        // console.log('FORM NAME: ', e.target.name);
-        // console.log('FORM VALUE: ', e.target.value);
+
         switch (e.target.name) {
             case 'preferred_name': {
                 setAvatar(buildMyRobohashUrl(e.target.value));
@@ -136,8 +135,7 @@ export default function SignupActivation({userCoords, ...restOfProps}) {
 
     const handleGovIdChange = (e) => {
         e.preventDefault();
-        // console.log(e.target.value);
-        // setGovId(e.target.value);
+
 
         // Update the blob now with the back-end and get the back end created blob data...
         // ... then update govId with an image url value
@@ -167,33 +165,16 @@ export default function SignupActivation({userCoords, ...restOfProps}) {
             govId
         )
             .then((res) => {
-                // console.log(
-                //   '### FROM <SIGNUPACTIVATION> Update User Profile THEN Response: ',
-                //   res
-                // );
+
 
                 setUserAuthn(deviseAuthnFromRes(userAuthn, res));
                 setUserProfile(userProfileFromHttpRes(res));
 
-                // console.log(
-                //   '### FROM <SIGNUPACTIVATION> setUserAuthn VALUE at the end of THEN: ',
-                //   userAuthn
-                // );
-
                 // history.push('/'); // commented out as suspect it causes 401 unauthorized after redirect to main
             })
             .catch((err) => {
-                // const errRes = err.response ?? {
-                //   headers: null,
-                //   data: err.message,
-                // };
-                // console.log(
-                //   'DEBUG UpdateUserProfile: ',
-                //   err.response?.data?.errors?,
-                //   '################ errRes JSON STRINGIFIED BEGIN#########',
-                //   JSON.stringify(err),
-                //   '################ errRes JSON STRINGIFIED END #########',
-                // );
+
+
                 setUserAuthn(deviseAuthnFromErr(userAuthn, err));
                 // setstatus(statusFromHttpResOrErr(err));
                 setstatus(() => ({
@@ -350,21 +331,7 @@ export default function SignupActivation({userCoords, ...restOfProps}) {
                         </div>
 
                         <div className='field'>
-                            {
-                                // <div className="control">
-                                // <label>
-                                //   Governement Id
-                                // <input
-                                //   className="input is-medium"
-                                //   name="gov_id"
-                                //   type="text"
-                                //   placeholder="Please upload your new government id here"
-                                //   value={govId}
-                                //   // onChange={handleGovIdChange}
-                                // />
-                                // </label>
-                                // </div>
-                            }
+
                             {govId == '' ? (
                                 <strong>
                                     A Governement Id is required to keep using the service (pdf,

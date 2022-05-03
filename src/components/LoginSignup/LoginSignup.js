@@ -12,8 +12,7 @@ import {Notification, STATUS_ERROR, STATUS_READY, UserAuthnContext, UserProfileC
 import {deviseAuthnFromRes, userProfileFromHttpRes,} from '../../services/apiServices';
 
 export default function LoginSignUp({
-                                        // setUserAuthn,
-                                        // setUserProfile,
+
                                         coords,
                                         usercoords,
                                         deviceCoords,
@@ -108,15 +107,7 @@ export default function LoginSignUp({
                         }
                     })
                     .catch((err) => {
-                        // console.log(
-                        //   'LOGIN SIGNUP CATCH USERPROFILE DATA: ',
-                        //   JSON.stringify(err.response.data.errors.full_messages)
-                        //   // ,userProfileFromHttpRes(err)
-                        // );
-                        // // console.log(
-                        // //   'LOGIN SIGNUP CATCH USERAUTHN DATA: ',
-                        // //   deviseAuthnFromErr(null, err)
-                        // // );
+
 
                         // history.push('/');
 

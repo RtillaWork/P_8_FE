@@ -140,16 +140,7 @@ export default function RequestorUserRoleTaskButtons({task, ...restOfProps}) {
                     Unpublish
                 </button>
             ) : null}
-            {
-                //   aTask.is_fullfilled ? (
-                //   <button
-                //     type='button'
-                //     onClick={handleDeleteATask}
-                //     className='card-footer-item button is-danger'>
-                //     delete
-                //   </button>
-                // ) : null
-            }
+
         </>
     );
 }

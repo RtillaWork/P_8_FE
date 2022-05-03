@@ -2,13 +2,8 @@
 import React, {useContext, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import Avatar from '../Avatar';
-// import tasks from '../../services/TasksServices';
 import './ProfileConversations.css';
-// import {
-//   getProfileConversations,
-//   createConversation,
-// } from "../../services/ConversationsServices";
-// import { UserContext } from "../../services/LoggedProfileContext";
+
 import Conversation from '../Conversation';
 import ConversationData from '../ConversationData/ConversationData';
 import {ConversationsContext, Notification,} from '../../AppPrelude';
@@ -17,12 +12,7 @@ import UserProfileContext from '../../services/UserProfileContext';
 import {ROLE_AS_ANY, ROLE_AS_REQUESTOR, ROLE_AS_VOLUNTEER,} from '../../services/appServices';
 
 export default function ProfileConversations({
-                                                 // userAuthn,
-                                                 // setUserAuthn,
-                                                 // userProfile,
-                                                 // coords,
-                                                 // conversations,
-                                                 // setConversations,
+
                                                  setNewConversation,
                                                  ...restOfProps
                                              }) {

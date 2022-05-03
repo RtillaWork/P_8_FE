@@ -12,25 +12,13 @@ export default function Notification({
                                          type = 'Notification',
                                          message = 'Undeterminate',
                                          redirectMessage,
-                                         // delay,
                                          ...restOfProps
                                      }) {
     const history = useHistory();
     // default parameters are
     const DELAY_TIMEOUT = 5000; // 5 seconds
 
-    // if (delay == null) {
-    //   delay = DELAY_TIMEOUT;
-    // }
 
-    // useEffect(() => {
-    //   setTimeout(() => {
-    //     history.push("/");
-    //   }, delay);
-    //   // return () => {
-    //   //   cleanup
-    //   // }
-    // }, []);
     let notificationClassName = 'notification ';
     type == STATUS_ERROR
         ? (notificationClassName += ' is-error')
@@ -66,27 +54,3 @@ export default function Notification({
     );
 }
 
-// return (
-//   <div className='notification is-info'>
-//     <div className=''></div>
-//     <div className=''>
-//       <h1 className='is-info'> TYPE: {type.toString()}</h1>
-//       <h1 className=''>CONTENT: {message.toString()}</h1>
-//       <Link to='/' className='button  is-link'>
-//         Home
-//       </Link>
-//     </div>
-//   </div>
-// );
-
-//  return (
-//     <div className='modal'>
-//       <div className='modal-background'></div>
-//       <div className='modal-content'>
-//         <h1 className='is-info'> TYPE: {type.toString()}</h1>
-//         <h1 className=''>CONTENT: {message.toString()}</h1>
-//         <h2>{redirectMessage ? <Link to='/'>{message}</Link> : null}</h2>
-//       </div>
-//       <button className='modal-close is-large' aria-label='close'></button>
-//     </div>
-//   );

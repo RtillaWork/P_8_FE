@@ -6,9 +6,7 @@ export default function Logout({
                                    userProfile,
                                    setUserAuthn,
                                    setUserProfile,
-                                   // setCoords,
-                                   // setTasks,
-                                   // setRadius,
+
                                }) {
     // setTasks(null);
     // setCoords(null);

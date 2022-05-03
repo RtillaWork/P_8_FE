@@ -120,14 +120,7 @@ export default function Task({task, ...restOfProps}) {
                 Unpublish
             </button>
             {' '}
-            {
-                // <button
-                //   type='button'
-                //   onClick={() => handleDeleteATask}
-                //   className='card-footer-item button is-danger'>
-                //   delete
-                // </button>
-            }
+
         </>
     );
 
@@ -174,23 +167,7 @@ export default function Task({task, ...restOfProps}) {
                 to={`/requests/${aTask.id.toString()}/conversations`}>
                 Offer Help
             </Link>
-            {
-                // <button
-                //   type='button'
-                //   onClick={() => {
-                //     // console.log(userProfile);
-                //     hideTask(parseInt(aTask.id));
-                //   }}
-                //   className='card-footer-item button is-link'>
-                //   Hide
-                // </button>
-                // <button
-                //   type='button'
-                //   onClick={() => pinTask(parseInt(aTask.id))}
-                //   className='card-footer-item button is-link'>
-                //   Pin
-                // </button>
-            }
+
         </>
     );
 
@@ -215,13 +192,11 @@ export default function Task({task, ...restOfProps}) {
                 <span className='icon is-large'>
           {aTask.kind === MATERIALNEED ? (
                   <FaParachuteBox/>
-              ) : //<i className="fas fa-parachute-box" aria-hidden="true"></i>
+              ) :
               aTask.kind === ONETIMETASK ? (
                   <FaHandsHelping/>
               ) : (
-                  // <i className="fas fa-hands-helping" aria-hidden="true"></i>
                   <FaLeaf/>
-                  // <i className="fas fa-leaf" aria-hidden="true"></i>
               )}
         </span>
             </header>
@@ -229,8 +204,8 @@ export default function Task({task, ...restOfProps}) {
                 {aTask.description ? (
                     <div className='content'>
                         {aTask.description}
-                        {/* <br/> */}
-                        {/* <time datetime={props.aTask.dateLastUpdate.toString()}>{Date(props.aTask.dateLastUpdate).toString()}</time> */}
+
+
                     </div>
                 ) : (
                     <button onClick={handleLoadTaskDescription}>Load description </button>
